@@ -221,11 +221,11 @@ Bonus list includes:
 
 ## VI. Examples
 
-<img width="1073" alt="image" src="https://gist.github.com/user-attachments/assets/849a7519-a12b-441b-836d-468937f2539c">
-<img width="1002" alt="image" src="https://gist.github.com/user-attachments/assets/48683e4e-7094-4f9e-a998-14d4e6c9bb51">
-<img width="1062" alt="image" src="https://gist.github.com/user-attachments/assets/7b2c67eb-889b-4aad-936b-d75ede309b37">
-<img width="1084" alt="image" src="https://gist.github.com/user-attachments/assets/467c4bcd-e654-4e3e-8367-463dbfdbd1f8">
-<img width="1080" alt="image" src="https://gist.github.com/user-attachments/assets/bf45dd1e-4adb-4968-8a48-3d2d75b0b675">
+![image](https://github.com/user-attachments/assets/dcfb7f23-f0ed-4786-8748-4d79c19192f5)
+![image](https://github.com/user-attachments/assets/3cbaa393-eed7-4f26-bcd1-b37139258564)
+![image](https://github.com/user-attachments/assets/d1b85c84-c44b-479d-90fc-825bb3c947b3)
+![image](https://github.com/user-attachments/assets/e1df0167-a716-4774-ae9c-b8ec5f2054d5)
+![image](https://github.com/user-attachments/assets/82ea58c0-36a7-4036-9758-a4bd3f859226)
 
 
 ---
