@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:32:04 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/03 20:39:58 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:00:55 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_window(t_game *game)
 	}
 }
 
-t_game	*init_game(void)
+t_game	*init_game(const char *map_file)
 {
 	t_game	*game;
 
@@ -39,7 +39,9 @@ t_game	*init_game(void)
 		ft_error("Failed to allocate memory for game");
 	game->mlx = init_mlx(game);
 	game->imgs = init_imgs(game);
-	game->map = init_map(game);
+	game->map = init_map(game, map_file);
+	if (!is_map_enclosed(game->map))
+		ft_error("The map is not enclosed by walls!");
 	return (game);
 }
 
@@ -70,17 +72,30 @@ t_imgs	*init_imgs(t_game *game)
 	return (imgs);
 }
 
-t_map	*init_map(t_game *game)
+t_map	*init_map(t_game *game, const char *map_file)
 {
 	t_map	*map;
+	int		i;
 
-	map = malloc(sizeof(t_map));
+	(void)game;
+	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 	{
-		free(game->imgs);
-		free(game->mlx);
-		free(game);
 		ft_error("Failed to allocate memory for map");
+		return (NULL);
 	}
+	map->map_data = load_map(map_file);
+	i = 0;
+	map->height = 0;
+	map->width = 0;
+	while (map->map_data[i])
+	{
+		if (ft_strlen(map->map_data[i]) > (size_t)map->width)
+			map->width = ft_strlen(map->map_data[i]);
+		map->height++;
+		i++;
+	}
+	ft_printf("Map width: %d\n", map->width);
+	ft_printf("Map height: %d\n", map->height);
 	return (map);
 }

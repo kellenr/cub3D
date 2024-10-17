@@ -3,68 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:47:20 by keramos-          #+#    #+#             */
-/*   Updated: 2024/06/10 01:04:55 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:13:51 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static size_t	ft_strlens(const char *s)
+size_t	gnl_strlen(const char *s)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
-	if (s[i] == '\0')
+	if (!s || !(*s))
 		return (0);
 	while (s[i])
 		i++;
 	return (i);
 }
 
-void	*ft_callocs(size_t nmemb, size_t size)
+void	*gnl_calloc(size_t nmemb, size_t bytesize)
 {
+	void			*array;
 	size_t			i;
-	unsigned char	*temp;
+	unsigned char	*ptr;
 
-	i = 0;
-	if (nmemb * size >= 2147483647)
+	if (nmemb == 0 || bytesize == 0)
+		return (ft_strdup(NULL));
+	if (nmemb > SIZE_MAX / bytesize || nmemb > INT_MAX / bytesize)
 		return (NULL);
-	temp = malloc(nmemb * size);
-	if (!temp)
+	array = malloc(nmemb * bytesize);
+	if (!array)
 		return (NULL);
-	while (i < nmemb * size)
-		temp[i++] = 0;
-	return (temp);
-}
-
-char	*ft_strjoins(char *s1, char *s2)
-{
-	char	*newstring;
-	int		i;
-	int		n;
-
+	ptr = array;
 	i = 0;
-	n = 0;
-	if (s1 == NULL)
-		return (s2);
-	newstring = malloc(sizeof(char) * (ft_strlens(s1) + ft_strlens(s2) + 1));
-	if (!newstring)
-		return (free (s1), free (s2), NULL);
-	while (s1[i])
+	while (i < (nmemb * bytesize))
 	{
-		newstring[i] = s1[i];
+		ptr[i] = 0;
 		i++;
 	}
-	while (s2[n])
+	return (array);
+}
+
+char	*gnl_substr(const char *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	char	*substr;
+
+	if (!s)
+		return (NULL);
+	i = 0;
+	while (s[start + i] && i < len)
+		i++;
+	substr = (char *)malloc((i + 1) * sizeof(char));
+	if (!substr)
+		return (NULL);
+	i = 0;
+	while (s[start + i] && i < len)
 	{
-		newstring[i + n] = s2[n];
-		n++;
+		substr[i] = s[start + i];
+		i++;
 	}
-	newstring[i + n] = '\0';
-	free(s1);
-	free(s2);
-	return (newstring);
+	substr[i] = '\0';
+	return (substr);
+}
+
+char	*gnl_strjoin(const char *s1, const char *s2)
+{
+	char	*newstr;
+	int		i;
+	int		j;
+
+	if (!s1)
+		s1 = "";
+	if (!s2)
+		s2 = "";
+	newstr = (char *)malloc(\
+		(gnl_strlen(s1) + gnl_strlen(s2) + 1) * sizeof(char));
+	if (!newstr)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		newstr[i] = s1[i];
+	j = -1;
+	while (s2[++j])
+		newstr[i++] = s2[j];
+	newstr[i] = '\0';
+	return (newstr);
+}
+
+char	*gnl_strdup(const char *s)
+{
+	int		size;
+	int		i;
+	char	*dup;
+
+	size = gnl_strlen(s);
+	if (size == 0)
+		return (NULL);
+	dup = (char *)gnl_calloc((size + 1), sizeof(char));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }

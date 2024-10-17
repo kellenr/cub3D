@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:42:29 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/03 20:29:43 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:30:42 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define VALID_EXTS ".cub"
 # define W_WIDTH 1920   // Set default width
 # define W_HEIGHT 960  // Set default height
+# define MAX_LINES 1024 // Adjust based on expected map size
 
 /* ************************************************************************** */
 /*                                   SRC                                      */
@@ -48,10 +49,12 @@ void	free_game(t_game *game);
 void	free_map(t_map *map);
 
 void	init_window(t_game *game);
-t_game	*init_game(void);
+t_game	*init_game(const char *map_file);
 t_mlx	*init_mlx(t_game *game);
 t_imgs	*init_imgs(t_game *game);
-t_map	*init_map(t_game *game);
+t_map	*init_map(t_game *game, const char *map_file);
+int		is_map_enclosed(t_map *map);
+char	**load_map(const char *file_path);
 
 int		key_handler(int keysym, t_game *game);
 void	ft_events(t_game *game);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 11:33:43 by keramos-          #+#    #+#              #
-#    Updated: 2024/10/03 16:54:01 by keramos-         ###   ########.fr        #
+#    Updated: 2024/10/17 15:37:50 by keramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ STEP_NUM := 0
 # **************************************************************************** #
 
 SRCS = cub3d.c src/ft_error.c src/check_argc.c src/init.c src/free.c \
-		src/clean.c src/events/key.c src/events/w_events.c
+		src/clean.c src/events/key.c src/events/w_events.c src/parsing.c/map.c
 
 OBJS = $(SRCS:.c=.o)
 

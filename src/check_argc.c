@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_argc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 14:36:06 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/03 20:40:11 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:59:24 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,44 @@ void	check_map_file(char *filename)
 	if (read(fd, buffer, 1) <= 0)
 		ft_error("The map file is empty.");
 	close(fd);
+}
+
+int	is_map_enclosed(t_map *map)
+{
+	int i;
+
+	// Check top and bottom rows
+	i = 0;
+	while (i < map->width)
+	{
+		if (map->map_data[0][i] != '1')
+		{
+			ft_printf("Top border not closed at column %d (value: %c)\n", i, map->map_data[0][i]);
+			return (0);
+		}
+		if (map->map_data[map->height - 1][i] != '1')
+		{
+			ft_printf("Bottom border not closed at column %d (value: %c)\n", i, map->map_data[map->height - 1][i]);
+			return (0);
+		}
+		i++;
+	}
+	// Check left and right columns
+	i = 0;
+	while (i < map->height)
+	{
+		if (map->map_data[i][0] != '1')
+		{
+			ft_printf("Left border not closed at row %d (value: %c)\n", i, map->map_data[i][0]);
+			return (0);
+		}
+		if (map->map_data[i][map->width - 1] != '1')
+		{
+			ft_printf("Right border not closed at row %d (value: %c)\n", i, map->map_data[i][map->width - 1]);
+			return (0);
+		}
+		i++;
+	}
+
+	return (1);
 }

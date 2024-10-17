@@ -3,89 +3,119 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:47:26 by keramos-          #+#    #+#             */
-/*   Updated: 2024/06/10 01:04:11 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:14:45 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void	copy_s2_in_s1(char *s1, char *s2)
+static int	find_nchar(const char *str)
 {
 	int	i;
 
+	if (!str)
+		return (-1);
 	i = 0;
-	while (s2[i])
+	while (str[i])
 	{
-		s1[i] = s2[i];
+		if (str[i] == '\n')
+			return (i);
 		i++;
 	}
-	s1[i] = '\0';
+	return (-1);
 }
 
-static int	find_line(char *buf, char **line)
+static char	*extract_line(char *savedlines)
 {
 	int		i;
-	int		j;
-	int		flag_line;
-	char	*find_line;
+	char	*nextline;
 
-	i = 0;
-	j = 0;
-	while (buf[i] && buf[i] != '\n')
-		i++;
-	flag_line = 0;
-	if (buf[i] == '\n')
-		flag_line = 1;
-	find_line = ft_callocs(i + flag_line + 1, 1);
-	if (find_line == NULL)
-		return (-1);
-	while (j < i + flag_line)
+	i = find_nchar(savedlines);
+	if (i >= 0)
 	{
-		find_line[j] = buf[j];
-		j++;
+		nextline = gnl_substr(savedlines, 0, i + 1);
+		if (!nextline)
+			return (NULL);
+		return (nextline);
 	}
-	*line = ft_strjoins(*line, find_line);
-	if (*line == NULL)
-		return (-1);
-	copy_s2_in_s1(buf, &buf[i + flag_line]);
-	return (flag_line);
+	return (NULL);
 }
 
-static char	*free_line(char **line)
+static char	*update(char *savedlines)
 {
-	if (*line)
-		free(*line);
-	return (NULL);
+	int		i;
+	char	*temp;
+
+	i = find_nchar(savedlines);
+	if (i >= 0)
+	{
+		temp = gnl_substr(savedlines, i + 1, gnl_strlen(savedlines) - i);
+		if (!temp)
+			return (NULL);
+		return (temp);
+	}
+	temp = gnl_strdup(savedlines);
+	if (!temp)
+		return (NULL);
+	return (temp);
+}
+
+static char	*read_lines(int fd, char **savedlines)
+{
+	char	*buffer;
+	char	*temp;
+	ssize_t	bytes_read;
+	char	*nextline;
+
+	while (find_nchar(*savedlines) < 0)
+	{
+		buffer = (char *)gnl_calloc((BUFFER_SIZE + 1), sizeof(char));
+		if (!buffer)
+			return (NULL);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read <= 0)
+		{
+			free(buffer);
+			break ;
+		}
+		temp = gnl_strjoin(*savedlines, buffer);
+		free(*savedlines);
+		*savedlines = gnl_strdup(temp);
+		free(temp);
+		free(buffer);
+	}
+	nextline = extract_line(*savedlines);
+	return (nextline);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	buf[BUFFER_SIZE + 1];
-	char		*line;
-	int			count_byte;
-	int			flag_line;
+	static char	*savedlines = NULL;
+	char		*temp;
+	char		*nextline;
 
-	line = NULL;
-	flag_line = 0;
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	while (flag_line == 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		flag_line = find_line(buf, &line);
-		if (flag_line == -1)
-			return (free_line(&line));
-		if (flag_line == 0)
-		{
-			count_byte = read(fd, buf, BUFFER_SIZE);
-			if (count_byte == 0 && *line)
-				flag_line = 1;
-			else if (count_byte <= 0)
-				return (free_line(&line));
-			buf[count_byte] = '\0';
-		}
+		free(savedlines);
+		savedlines = NULL;
+		return (NULL);
 	}
-	return (line);
+	nextline = read_lines(fd, &savedlines);
+	temp = update(savedlines);
+	if (savedlines)
+		free(savedlines);
+	savedlines = gnl_strdup(temp);
+	free(temp);
+	if (!nextline)
+	{
+		if (!savedlines)
+			return (NULL);
+		nextline = gnl_strdup(savedlines);
+		free(savedlines);
+		savedlines = NULL;
+	}
+	return (nextline);
 }
