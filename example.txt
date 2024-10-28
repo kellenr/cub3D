@@ -1,0 +1,80 @@
+For example:
+
+F 220,100,0 becomes 14443520, which is equivalent to 0xDC6400 in hexadecimal.
+C 225,30,0 becomes 14753280, equivalent to 0xE11E00.
+
+	char	*line;
+	char	*trimmed;
+	int		found_textures = 0;
+
+	// Read the first line to determine if texture paths are provided
+	line = get_next_line(fd);
+	trimmed = ft_strtrim(line, " ");
+
+	// If the first line starts with '1', it means no texture data, use default textures
+	if (trimmed[0] == '1')
+	{
+		printf("Using default textures, starting map parsing...\n");
+		load_default_textures(txt);  // Load default textures
+		load_map(fd, map, trimmed);  // Parse the map starting from this line
+		free(trimmed);
+		free(line);
+		return;
+	}
+
+	// Otherwise, parse the texture paths
+	free(trimmed);  // Free the trimmed string after checking
+	free(line);  // Free the original line
+
+	while ((line = get_next_line(fd)) && found_textures < 7)
+	{
+		trimmed = ft_strtrim(line, " ");
+
+		// Skip empty lines
+		if (ft_strlen(trimmed) == 0)
+		{
+			free(trimmed);
+			free(line);
+			continue;
+		}
+
+		// Now check for each texture identifier and path
+		if (ft_strncmp(trimmed, "NO ", 3) == 0)
+			txt->north = parse_texture_path(trimmed);
+		else if (ft_strncmp(trimmed, "SO ", 3) == 0)
+			txt->south = parse_texture_path(trimmed);
+		else if (ft_strncmp(trimmed, "WE ", 3) == 0)
+			txt->west = parse_texture_path(trimmed);
+		else if (ft_strncmp(trimmed, "EA ", 3) == 0)
+			txt->east = parse_texture_path(trimmed);
+		// else if (ft_strncmp(trimmed, "S ", 2) == 0)   // Sprite is optional
+		// 	txt->sprite = parse_texture_path(trimmed);
+		else if (ft_strncmp(trimmed, "F ", 2) == 0)
+			txt->floor_color = parse_rgb(trimmed);
+		else if (ft_strncmp(trimmed, "C ", 2) == 0)
+			txt->ceiling_color = parse_rgb(trimmed);
+		else if (trimmed[0] == '1')  // First map line found
+		{
+			free(trimmed);
+			free(line);
+			break;
+		}
+		else
+		{
+			printf("Error: Invalid identifier in texture section: %s\n", trimmed);
+			free(trimmed);
+			free(line);
+			return;
+		}
+
+		found_textures++;
+		free(trimmed);
+		free(line);
+	}
+
+	// Ensure all required textures are provided
+	if (!txt->north || !txt->south || !txt->west || !txt->east || txt->floor_color == -1 || txt->ceiling_color == -1)
+		ft_error("Error: Missing one or more required texture paths.");
+
+	// After parsing the textures, start parsing the map
+	load_map(fd, map, NULL);
