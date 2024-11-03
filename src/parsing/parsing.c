@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 20:18:14 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/28 20:12:45 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:21:27 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,6 @@ void	parse_file(t_game *game, char *filename)
 	load_map(fd, game->map, line);         // Parse the map
 	close(fd);                      // Close the file
 	validate_map(game);             // Validate the map
+	game->player = init_player();
+	initialize_player(game);        // Initialize the player
 }

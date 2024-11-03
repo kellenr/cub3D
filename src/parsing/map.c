@@ -6,22 +6,11 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:42:59 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/28 20:01:11 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:19:09 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-char	*trim_trailing_whitespace(char *line)
-{
-	int len = ft_strlen(line);
-
-	while (len > 0 && ft_isspace(line[len - 1]))
-	{
-		line[len - 1] = '\0';
-		len--;
-	}
-	return (line);
-}
 
 void	load_map(int fd, t_map *map, char *first_line)
 {
@@ -57,18 +46,6 @@ void	load_map(int fd, t_map *map, char *first_line)
 	calculate_map_dimensions(map);
 }
 
-void	store_map_line(t_map *map, char *line, int *row, int *capacity)
-{
-	// Resize map_data if row exceeds current capacity
-	if (*row >= *capacity)
-	{
-		*capacity *= 2;
-		map->map_data = ft_realloc(map->map_data, sizeof(char *) * (*capacity));
-		if (!map->map_data)
-			ft_error("Failed to resize map data");
-	}
-	map->map_data[(*row)++] = strdup(line);
-}
 
 void	calculate_map_dimensions(t_map *map)
 {
@@ -86,29 +63,3 @@ void	calculate_map_dimensions(t_map *map)
 	}
 }
 
-
-
-
-// char	*line;
-	// int		row;
-	// int		capacity;
-
-	// row = 0;
-	// capacity = 10;
-	// map->map_data = (char **)malloc(sizeof(char *) * (capacity)); // Define MAX_LINES based on expected max map size
-	// if (!map->map_data)
-	// 	ft_error("Failed to allocate memory for map data");
-	// map->map_data[row++] = ft_strdup(first_line);
-	// free(first_line);
-	// while ((line = get_next_line(fd)) != NULL)
-	// {
-	// 	line = trim_whitespace(line);
-	// 	if (line[0] == '1' || ft_isspace(line[0]))
-	// 	{
-	// 		store_map_line(map, line, &row, &capacity);
-	// 	}
-	// 	free(line);
-	// }
-	// map->map_data[row] = NULL;  // Null-terminate
-	// map->height = row;
-	// calculate_map_dimensions(map);

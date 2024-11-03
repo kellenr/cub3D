@@ -1,0 +1,17 @@
+./inc/struct.h
+./inc/cub3d.h
+./cub3d.c
+./src/utils/ft_error.c
+./src/utils/clean.c
+./src/utils/utils.c
+./src/parsing/map.c
+./src/parsing/texture.c
+./src/parsing/parsing.c
+./src/validate/check_arg.c
+./src/validate/check_map.c
+./src/validate/check_texture.c
+./src/validate/check_layout.c
+./src/init/init_mlx.c
+./src/init/init_game.c
+./src/events/key.c
+./src/events/intro.c

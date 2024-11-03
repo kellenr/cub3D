@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:11:59 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/24 16:36:10 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:57:07 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,3 +30,19 @@ void	ft_events(t_game *game)
 	mlx_hook(game->mlx->win, DestroyNotify, StructureNotifyMask, \
 				close_handler, game);
 }
+
+/*
+int	handle_keypress(int key, t_game *game)
+{
+	if (key == KEY_W)
+		move_player_forward(game);
+	else if (key == KEY_S)
+		move_player_backward(game);
+	else if (key == KEY_A)
+		rotate_player_left(game);
+	else if (key == KEY_D)
+		rotate_player_right(game);
+	else if (key == KEY_ESC)
+		exit_game(game);
+	return (0);
+} */

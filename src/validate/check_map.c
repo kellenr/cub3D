@@ -6,12 +6,25 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:09:14 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/28 21:34:59 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:09:42 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+ * Function: get_map_char
+ * ----------------------
+ * Returns the character at the given row and column indices.
+ * If the indices are out of bounds, returns a space (' ').
+ *
+ * map: Pointer to the map structure.
+ * row: The row index.
+ * col: The column index.
+ *
+ * returns: The character at the given indices.
+ * 		If out of bounds, returns a space (' ').
+ */
 char	get_map_char(t_map *map, int row, int col)
 {
 	int	row_length;
@@ -29,7 +42,8 @@ char	get_map_char(t_map *map, int row, int col)
 /*
  * Function: is_valid_char
  * -----------------------
- * Checks if the given character is one of the allowed map characters or a space.
+ * Checks if the given character is one of the allowed map characters or a
+ * space.
  *
  * c: The character to validate.
  *
@@ -71,7 +85,7 @@ int	check_adjacents_not_void(t_map *map, int row, int col)
 				continue ;
 			}
 			if (get_map_char(map, row + delta_row, col + delta_col) == ' ')
-				return (0);
+				ft_error("Invalid map layout!");
 			delta_col++;
 		}
 		delta_row++;
@@ -82,7 +96,8 @@ int	check_adjacents_not_void(t_map *map, int row, int col)
 /*
  * Function: is_map_enclosed
  * -------------------------
- * Validates that the map is enclosed by walls and contains only allowed characters.
+ * Validates that the map is enclosed by walls and contains only
+ * allowed characters.
  *
  * map: Pointer to the map structure.
  *
@@ -107,7 +122,7 @@ int	is_map_enclosed(t_map *map)
 
 			current = get_map_char(map, row, col);
 			if (!is_valid_char(current))
-				return (0);
+				ft_error("Invalid character in map!");
 			if (current == 'N' || current == 'S' ||
 				current == 'E' || current == 'W')
 				player_count++;
@@ -127,121 +142,18 @@ int	is_map_enclosed(t_map *map)
 		row++;
 	}
 	if (player_count != 1)
-		return (0);
-	return (1);
-}
-
-int	is_map_enclosed2(t_map *map)
-{
-	int	i;
-	int	j;
-
-	// Check top and bottom rows
-	i = 0;
-	while (i < map->width)
-	{
-		if (map->map_data[0][i] != '1' && map->map_data[0][i] != ' ')  // Allow spaces, but enforce '1'
-		{
-			printf("Map enclosure error at top row, column %d: '%c'\n", i, map->map_data[0][i]);
-			return (0);
-		}
-		if (map->map_data[map->height - 1][i] != '1' && map->map_data[map->height - 1][i] != ' ')
-		{
-			printf("Map enclosure error at bottom row, column %d: '%c'\n", i, map->map_data[map->height - 1][i]);
-			return (0);
-		}
-		i++;
-	}
-	// Check leftmost and rightmost columns
-	j = 0;
-	while (j < map->height)
-	{
-		if (map->map_data[j][0] != '1' && map->map_data[j][0] != ' ')  // Allow spaces at edges
-		{
-			printf("Map enclosure error at row %d, leftmost column: '%c'\n", j, map->map_data[j][0]);
-			return (0);
-		}
-		if (map->map_data[j][map->width - 1] != '1' && map->map_data[j][map->width - 1] != ' ')
-		{
-			printf("Map enclosure error at row %d, rightmost column: '%c'\n", j, map->map_data[j][map->width - 1]);
-			return (0);
-		}
-		j++;
-	}
-
-	return (1);
-}
-
-int	validate_map_chars(t_map *map)
-{
-	int		i;
-	int		j;
-	int		player_count;
-	char	c;
-
-	i = 0;
-	player_count = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (j < map->width)
-		{
-			c = map->map_data[i][j];
-			// Check if character is valid
-			if (!ft_strchr("01NSEW ", c))
-			{
-				ft_printf("Invalid character '%c' found at row %d, column %d\n", c, i, j);
-				return (0);  // Return 0 to indicate failure
-			}
-			// Count player positions
-			if (ft_strchr("NSEW", c))
-				player_count++;
-			j++;
-		}
-		i++;
-	}
-	// Ensure exactly one player start position
-	if (player_count != 1)
 	{
 		if (player_count == 0)
-			ft_error("No player start position found!");
+			ft_error("No player position found in map!");
 		else
-			ft_error("Multiple player start positions found!");
-		return (0);
+			ft_error("Multiple player positions found in map!");
 	}
 	return (1);
 }
 
-int	is_map_valid_layout(t_map *map)
-{
-	int		i;
-	int		j;
-	char	c;
 
-	i = 1;
-	while (i < map->height - 1)  // Skip the first and last rows
-	{
-		j = 1;
-		while (j < map->width - 1)  // Skip the first and last columns
-		{
-			c = map->map_data[i][j];
-			// Check if it's an empty space or a player start position
-			if (c == '0' || ft_strchr("NSEW", c))
-			{
-				// Check the surroundings: top, bottom, left, right
-				if (map->map_data[i - 1][j] == ' ' || map->map_data[i + 1][j] == ' ' ||
-					map->map_data[i][j - 1] == ' ' || map->map_data[i][j + 1] == ' ')
-				{
-					ft_printf("Map layout error: open space next to row %d, column %d\n", i, j);
-					return (0);
-				}
-			}
-			j++;
-		}
-		i++;
-	}
-	return (1);  // Return 1 to indicate the layout is valid
-}
+
+
 
 int	validate_map(t_game *game)
 {
@@ -251,18 +163,5 @@ int	validate_map(t_game *game)
 		// free_game(game);
 		ft_error("The map is not enclosed by walls!");
 	}
-	// if (!validate_map_chars(game->map))
-	// {
-	// 	// free_map(game->map);
-	// 	// free_game(game);
-	// 	ft_error("Invalid characters in map!");
-	// }
-	// if (!is_map_valid_layout(game->map))
-	// {
-	// 	// free_map(game->map);
-	// 	// free_game(game);
-	// 	ft_error("Invalid map layout!");
-
-	// }
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:28:23 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/24 16:26:05 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:46:25 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,27 @@ void	window_init(t_fractol *fc)
 	ft_events(fc);
 	ft_color(fc);
 } */
+
+/*
+ * Function to initialize the images structure
+ * Returns a pointer to t_imgs on success, exits on failure
+ */
+t_imgs	*init_imgs(void)
+{
+	t_imgs	*imgs;
+
+	imgs = malloc(sizeof(t_imgs));
+	if (!imgs)
+		ft_error("Failed to allocate memory for images");
+	imgs->img = NULL;
+	imgs->pix = NULL;
+	imgs->bitp = 0;
+	imgs->ln_len = 0;
+	imgs->endian = 0;
+	imgs->intro_img = NULL;
+	imgs->intro_pix = NULL;
+	imgs->intro_bitp = 0;
+	imgs->intro_ln_len = 0;
+	imgs->intro_endian = 0;
+	return (imgs);
+}

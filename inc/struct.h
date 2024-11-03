@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:40 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/25 23:03:07 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:08:52 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,28 @@
  * Structure for the player
  * x: the x position of the player
  * y: the y position of the player
+ * dir_x: the x direction of the player
+ * dir_y: the y direction of the player
  * angle: the angle the player is facing
  * direction: the direction the player is facing
  */
 typedef struct s_player
 {
-	float	x;
-	float	y;
-	float	angle;
-	char	direction;
-} t_player;
+	// float	x;
+	// float	y;
+	// float	dir_x;
+	// float	dir_y;
+	// float	angle;
+	// char		direction;
+	double	x;        // Player's X position on the map
+	double	y;        // Player's Y position on the map
+	double	dir_x;    // X component of the direction vector
+	double	dir_y;    // Y component of the direction vector
+	double	plane_x;  // X component of the plane vector
+	double	plane_y;  // Y component of the plane vector
+	double	angle;    // Player's viewing angle
+	char	direction;  // Player's viewing direction
+}			t_player;
 
 /*
  * Structure for the map
@@ -57,6 +69,11 @@ typedef struct s_imgs
 	int		bitp;
 	int		ln_len;
 	int		endian;
+	void	*intro_img;      // Add this line
+	char	*intro_pix;      // And this if you need pixel data
+	int		intro_bitp;
+	int		intro_ln_len;
+	int		intro_endian;
 }			t_imgs;
 
 /*
@@ -96,16 +113,18 @@ typedef struct s_txt
  * map: the map
  * mlx: the mlx
  * imgs: the images
- * textures: the textures
+ * player: the player
+ * txt: the textures
+ * intro_active: the intro screen active
  */
 typedef struct s_game
 {
 	t_map		*map;
 	t_mlx		*mlx;
 	t_imgs		*imgs;
-	// t_imgs		intro;
 	t_player	*player;
 	t_txt		*txt;
+	int			intro_active;
 }			t_game;
 
 #endif

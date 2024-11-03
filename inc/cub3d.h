@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:42:29 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/28 12:31:34 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/03 15:21:59 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define W_WIDTH 1920   // Set default width
 # define W_HEIGHT 960  // Set default height
 # define MAX_LINES 1024 // Adjust based on expected map size
+# define INTRO "textures/intro.xpm"
 
 /* ************************************************************************** */
 /*                                   SRC                                      */
@@ -49,8 +50,11 @@ int		check_extension(char *filename);
 void	check_map_file(char *filename);
 char	*check_texture(int fd, t_txt *txt);
 int		is_map_enclosed(t_map *map);
-int		validate_map_chars(t_map *map);
-int		is_map_valid_layout(t_map *map);
+char	get_map_char(t_map *map, int row, int col);
+int		is_valid_char(char c);
+int		check_adjacents_not_void(t_map *map, int row, int col);
+// int		validate_map_chars(t_map *map);
+// int		is_map_valid_layout(t_map *map);
 int		validate_map(t_game *game);
 
 /*                                  Init                                      */
@@ -59,6 +63,7 @@ void	init_mlx(t_game *game);
 void	init_game(t_game *game);
 t_txt	*init_txt(t_game *game);
 t_map	*init_map(t_game *game);
+t_player	*init_player(void);
 
 /*                                 Parsing                                    */
 
@@ -69,6 +74,7 @@ void	load_map(int fd, t_map *map, char *first_line);
 void	store_map_line(t_map *map, char *line, int *row, int *capacity);
 void	calculate_map_dimensions(t_map *map);
 
+void	initialize_player(t_game *game);
 
 
 /*                                  Event                                     */
