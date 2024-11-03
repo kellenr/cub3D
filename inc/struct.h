@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:40 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/03 15:08:52 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:56:07 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
+	void	*bg_image; // Add this line
 }			t_mlx;
 
 /*

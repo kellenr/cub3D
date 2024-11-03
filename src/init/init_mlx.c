@@ -6,11 +6,25 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:28:23 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/30 15:46:25 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:55:26 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	load_background(t_game *game, char *path)
+{
+	int	width;
+	int	height;
+
+	game->mlx->bg_image = mlx_xpm_file_to_image(game->mlx->mlx, path, &width, &height);
+	if (!game->mlx->bg_image)
+	{
+		fprintf(stderr, "Error: Failed to load background image from %s\n", path);
+		// Handle the error appropriately, possibly exiting the program
+		exit(EXIT_FAILURE);
+	}
+}
 
 void	init_mlx(t_game *game)
 {
@@ -22,6 +36,7 @@ void	init_mlx(t_game *game)
 	game->mlx->win = mlx_new_window(game->mlx->mlx, W_WIDTH, W_HEIGHT, "Cub3D");
 	if (!game->mlx->win)
 		ft_error("Failed to create window");
+	load_background(game, "./texture/intro.xpm");
 	ft_events(game);
 }
 
