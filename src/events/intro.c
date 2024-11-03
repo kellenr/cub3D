@@ -6,12 +6,11 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:17:40 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/03 21:54:31 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:58:15 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 void	display_intro(t_game *game)
 {
