@@ -56,8 +56,8 @@ SRC_DIR = src/
 OBJS_DIR = objs/
 
 LIBFT_FILES = isalpha isdigit isalnum \
-		isascii isprint atoi \
-		bzero calloc itoa \
+		isascii isprint atoi isspace \
+		bzero calloc itoa realloc \
 		memchr memcmp memcpy \
 		memmove memset \
 		putchar_fd putendl_fd putnbr_fd \

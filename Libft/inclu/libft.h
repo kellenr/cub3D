@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 13:34:20 by keramos-          #+#    #+#             */
-/*   Updated: 2024/08/11 16:11:14 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/10/28 12:22:31 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
+int		ft_isspace(char c);
 
 /* ************************************************************************** */
 /*                                 MEMORY                                     */
@@ -55,6 +56,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_bzero(void *s, size_t n);
+void	*ft_realloc(void *ptr, size_t new_size);
 
 /* ************************************************************************** */
 /*                                   LIST                                     */
