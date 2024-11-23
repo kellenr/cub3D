@@ -6,7 +6,7 @@
 #    By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 11:33:43 by keramos-          #+#    #+#              #
-#    Updated: 2024/10/26 00:00:00 by keramos-         ###   ########.fr        #
+#    Updated: 2024/11/23 01:44:02 by keramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = cub3D
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 LIBFT = ./Libft/libft.a
 
@@ -69,11 +69,16 @@ STEP_NUM := 0
 
 SRCS = cub3d.c \
 		src/validate/check_arg.c src/validate/check_texture.c \
-		src/validate/check_map.c \
+		src/validate/check_map.c src/validate/check_layout.c \
 		src/utils/ft_error.c src/utils/clean.c src/utils/utils.c \
+		src/utils/free.c src/utils/art.c \
 		src/init/init_mlx.c src/init/init_game.c \
-		src/events/key.c src/events/intro.c \
-		src/parsing/texture.c src/parsing/parsing.c src/parsing/map.c
+		src/events/key.c src/events/intro.c src/events/moves.c \
+		src/events/rotate.c \
+		src/parsing/texture.c src/parsing/parsing.c src/parsing/map.c \
+		src/parsing/player.c \
+		src/render/raycast.c src/render/minimap.c src/render/render.c \
+		src/render/r_txt.c
 
 OBJS = $(SRCS:.c=.o)
 

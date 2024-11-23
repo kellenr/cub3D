@@ -6,41 +6,45 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:53:49 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/28 13:41:37 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/23 02:15:29 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
+/*
+ * Function to parse the texture identifiers and colors from the file.
+ * Expects a line with one of the following identifiers:
+ * NO, SO, WE, EA, F, C
+ * Parses the corresponding texture or color value and stores it in the
+ * txt structure.
+ * Returns 1 if the identifier is valid, 0 otherwise.
+ * If the identifier is not recognized, the function does nothing.
+ */
 int	parse_texture(char *line, t_txt *txt)
 {
-	if (strncmp(line, "NO ", 3) == 0)
-		txt->north = strdup(line + 3);
-	else if (strncmp(line, "SO ", 3) == 0)
-		txt->south = strdup(line + 3);
-	else if (strncmp(line, "WE ", 3) == 0)
-		txt->west = strdup(line + 3);
-	else if (strncmp(line, "EA ", 3) == 0)
-		txt->east = strdup(line + 3);
+	if (ft_strncmp(line, "NO ", 3) == 0)
+		txt->north = ft_strdup(line + 3);
+	else if (ft_strncmp(line, "SO ", 3) == 0)
+		txt->south = ft_strdup(line + 3);
+	else if (ft_strncmp(line, "WE ", 3) == 0)
+		txt->west = ft_strdup(line + 3);
+	else if (ft_strncmp(line, "EA ", 3) == 0)
+		txt->east = ft_strdup(line + 3);
 	else if (line[0] == 'F')
-	{
 		txt->floor_color = extract_rgb(line + 1);
-		printf("Parsed Floor color: %d\n", txt->floor_color);
-	}
 	else if (line[0] == 'C')
-	{
 		txt->ceiling_color = extract_rgb(line + 1);
-		printf("Parsed Ceiling color: %d\n", txt->ceiling_color);
-	}
 	else
-	{
-		printf("Invalid line in file (unknown identifier): %s\n", line);
 		return 0;
-	}
 	return 1;
 }
 
+/*
+ * Function to extract RGB values from a string.
+ * Expects a string in the format "R,G,B" where R, G, and B are integers.
+ * Returns the combined RGB value as an integer.
+ */
 int	extract_rgb(char *line)
 {
 	int	r;
@@ -62,46 +66,33 @@ int	extract_rgb(char *line)
 	if (line[i++] != ',')
 		ft_error("Invalid RGB format");
 	b = ft_atoi(line + i);
-	printf("Extracted RGB values: r=%d, g=%d, b=%d\n", r, g, b);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 		ft_error("RGB values must be between 0 and 255");
 	return (r << 16) | (g << 8) | b;  // Combine R, G, B into a single integer
 }
 
+int	*ft_xpm(t_game *game, char *path)
+{
+	int		x;
+	int		y;
+	int		*i;
+	t_imgs	img;
 
-// void parse_color(char *line, t_txt *textures)
-// {
-//     int r, g, b;
-
-//     if (line[0] == 'F')
-//     {
-//         if (sscanf(line + 1, " %d,%d,%d", &r, &g, &b) != 3)
-//             ft_error("Invalid floor color.");
-//         textures->floor_color = (r << 16) | (g << 8) | b;  // Convert to hex color
-//     }
-//     else if (line[0] == 'C')
-//     {
-//         if (sscanf(line + 1, " %d,%d,%d", &r, &g, &b) != 3)
-//             ft_error("Invalid ceiling color.");
-//         textures->ceiling_color = (r << 16) | (g << 8) | b;  // Convert to hex color
-//     }
-//     else
-//         ft_error("Invalid color line.");
-// }
-
-
-// void parse_map_line(char *line, t_map *map, int row)
-// {
-//     int i = 0;
-
-//     while (line[i])
-//     {
-//         if (line[i] != '1' && line[i] != '0' && line[i] != 'N' && line[i] != 'S' &&
-//             line[i] != 'E' && line[i] != 'W' && line[i] != ' ')
-//             ft_error("Invalid character in map.");
-
-//         map->map_data[row][i] = line[i];  // Store the map grid character
-//         i++;
-//     }
-// }
-
+	init_txt_path(game, &img, path);
+	i = malloc(sizeof(int) * game->txt->size_h * game->txt->size_w);
+	if (!i)
+		ft_error("Failed to allocate memory for txt_data");
+	y = 0;
+	while (y < game->txt->size_h)
+	{
+		x = 0;
+		while (x < game->txt->size_w)
+		{
+			i[game->txt->size_w * y + x] = img.pix[y * game->txt->size_w + x];
+			x++;
+		}
+		y++;
+	}
+	mlx_destroy_image(game->mlx, img.img);
+	return (i);
+}

@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:37:19 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/25 22:53:31 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:05:55 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,96 @@
 void	clean_init(t_game *game)
 {
 	game->mlx = NULL;  // Initialize the mlx pointer
-	game->map = NULL;  // Initialize map
-	game->txt = NULL;  // Initialize texture structure
+	game->win = NULL;  // Initialize the window pointer
+	game->map->map_data = NULL;  // Initialize map
+	game->imgs->img = NULL;  // Initialize image structure
+	game->imgs->pix = NULL;  // Initialize pixel data
+	game->txt->north = NULL;  // Initialize texture structure
+	game->txt->south = NULL;  // Initialize texture structure
+	game->txt->west = NULL;  // Initialize texture structure
+	game->txt->east = NULL;  // Initialize texture structure
+	game->player = NULL;  // Initialize player
 }
 
+// int	close_handler(t_game *game)
+// {
+// 	mlx_destroy_image(game->mlx, game->imgs->img);
+// 	mlx_destroy_window(game->mlx, game->win);
+// 	mlx_destroy_display(game->mlx);
+// 	free(game->mlx);
+// 	exit(EXIT_SUCCESS);
+// 	// return (0);
+// }
 int	close_handler(t_game *game)
 {
-	mlx_destroy_window(game->mlx->mlx, game->mlx->win);
-	mlx_destroy_display(game->mlx->mlx);
-	free(game->mlx->mlx);
+	printf("Closing the game and cleaning up resources.\n");
+
+	if (game->imgs)
+	{
+		if (game->imgs->img)
+			mlx_destroy_image(game->mlx, game->imgs->img);
+		free(game->imgs);
+	}
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx); // For Linux; omit if on macOS
+		free(game->mlx);
+	}
+	// Free other allocated resources (map, textures, player)
+	// Example:
+	// free_map(game.map);
+	// free_player(game.player);
+	// free_txt(game.txt);
+
 	exit(EXIT_SUCCESS);
 	return (0);
 }
-// {
-// 	mlx_destroy_image(fc->mlx, fc->img.img);
-// 	mlx_destroy_window(fc->mlx, fc->mlx_window);
-// 	mlx_destroy_display(fc->mlx);
-// 	free(fc->mlx);
-// 	free(fc->palette);
-// 	exit(EXIT_SUCCESS);
-// }
-/* {
-	fc->mlx = NULL;
-	fc->mlx_window = NULL;
-	fc->img.img = NULL;
-	fc->img.pix = NULL;
-	fc->palette = NULL;
-	fc->color_p = -1;
-	fc->set = -1;
-	fc->r.min = 0;
-	fc->r.max = 0;
-	fc->i.min = 0;
-	fc->i.max = 0;
-	fc->j.r = 0;
-	fc->j.i = 0;
-	fc->color = 0;
+
+/* void	clean_free(t_game *game)
+{
+	if (game->map)
+	{
+		if (game->map->map_data)
+		{
+			for (int i = 0; i < game->map->height; i++)
+				free(game->map->map_data[i]);
+			free(game->map->map_data);
+		}
+		free(game->map);
+	}
+	if (game->mlx)
+	{
+		if (game->mlx->bg_image)
+			mlx_destroy_image(game->mlx->mlx, game->mlx->bg_image);
+		if (game->mlx->win)
+			mlx_destroy_window(game->mlx->mlx, game->mlx->win);
+		if (game->mlx->mlx)
+			mlx_destroy_display(game->mlx->mlx);
+		free(game->mlx->mlx);
+		free(game->mlx);
+	}
+	if (game->txt)
+	{
+		if (game->txt->north)
+			free(game->txt->north);
+		if (game->txt->south)
+			free(game->txt->south);
+		if (game->txt->west)
+			free(game->txt->west);
+		if (game->txt->east)
+			free(game->txt->east);
+		if (game->txt->sprite)
+			free(game->txt->sprite);
+		free(game->txt);
+	}
+	if (game->imgs)
+	{
+		if (game->imgs->img)
+			mlx_destroy_image(game->mlx->mlx, game->imgs->img);
+		free(game->imgs);
+	}
+	exit(EXIT_FAILURE);
+
 } */

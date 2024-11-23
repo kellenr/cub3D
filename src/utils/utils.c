@@ -6,12 +6,16 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 20:48:30 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/28 14:15:59 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/22 23:14:09 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+ * Function to open a file and return the file descriptor
+ * Exits the program with an error message if the file cannot be opened
+ */
 int	open_file(char *filename)
 {
 	int	fd;
@@ -22,9 +26,12 @@ int	open_file(char *filename)
 	return fd;
 }
 
+/*
+ * Function to check if a line is empty or contains only spaces
+ * Returns 1 if the line is empty, 0 otherwise
+ */
 int	is_empty_line(char *line)
 {
-	// Returns true if the line is empty or contains only spaces
 	while (*line)
 	{
 		if (!ft_isspace(*line))  // Check if the line has non-space characters
@@ -34,12 +41,16 @@ int	is_empty_line(char *line)
 	return (1);
 }
 
+/*
+ * Function to trim leading and trailing whitespace from a string
+ * Returns the trimmed string
+ */
 char	*trim_whitespace(char *str)
 {
 	int	len;
 
 	len = ft_strlen(str);
-	while (len > 0 && (str[len - 1] == '\n' || str[len - 1] == ' '))
+	while (len > 0 && (str[len - 1] == '\n' || str[len - 1] == ' ' || str[len - 1] == '\t'))
 	{
 		str[len - 1] = '\0';  // Replace newline or space with null terminator
 		len--;
@@ -47,6 +58,11 @@ char	*trim_whitespace(char *str)
 	return (str);
 }
 
+/*
+ * Function to read a line from a file descriptor and trim leading and
+ * trailing whitespace
+ * Returns the trimmed line or NULL if the line is empty
+*/
 char	*read_and_trim_line(int fd)
 {
 	char	*line;
@@ -62,51 +78,3 @@ char	*read_and_trim_line(int fd)
 	}
 	return (line);
 }
-
-
-
-
-
-/*
-void	calculate_map_dimensions(t_map *map)
-{
-	int	i;
-	int	current_width;
-
-	i = 0;
-	while (map->map_data[i])
-	{
-		current_width = ft_strlen(map->map_data[i]);
-		if (current_width > map->width)
-			map->width = current_width;  // Update width to the longest line
-		map->height++;  // Increment the map height for each row
-		i++;
-	}
-}
-
-void	pad_map_rows(t_map *map)
-{
-	int		i;
-	char	*padding;
-	int		row_length;
-	int		padding_size;
-
-	i = 0;
-	while (i < map->height)
-	{
-		row_length = ft_strlen(map->map_data[i]);
-		if (row_length < map->width)
-		{
-			// Calculate the padding needed for the current row
-			padding_size = map->width - row_length;
-			padding = ft_calloc(padding_size + 1, sizeof(char));
-			if (!padding)
-				ft_error("Failed to allocate memory for padding");
-			ft_memset(padding, ' ', padding_size);
-
-			// Append the padding to the current row
-			map->map_data[i] = ft_strjoin_free(map->map_data[i], padding);  // Assume it frees the first argument
-		}
-		i++;
-	}
-} */

@@ -6,29 +6,11 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:26:57 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/03 20:37:34 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/22 22:23:07 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	free_game(t_game *game)
-{
-	if (game)
-	{
-		if (game->mlx)
-		{
-			if (game->mlx->win)
-				mlx_destroy_window(game->mlx->mlx, game->mlx->win);
-			free(game->mlx);
-		}
-		if (game->imgs)
-			free(game->imgs);
-		if (game->map)
-			free(game->map);
-		free(game);
-	}
-}
 
 void	free_map(t_map *map)
 {
@@ -44,24 +26,42 @@ void	free_map(t_map *map)
 			i++;
 		}
 		free(map->map_data);
+		map->map_data = NULL;
+	}
+	free(map);
+}
+
+void	free_texture(t_txt *txt)
+{
+	if (txt)
+	{
+		if (txt->north)
+			free(txt->north);
+		if (txt->south)
+			free(txt->south);
+		if (txt->west)
+			free(txt->west);
+		if (txt->east)
+			free(txt->east);
+		if (txt->sprite)
+			free(txt->sprite);
+		free(txt);
 	}
 }
 
-	/* if (game->mlx->win)
-	{
-		mlx_destroy_window(game->mlx->mlx, game->mlx->win);
-		mlx_destroy_display(game->mlx->mlx);
-		free(game->mlx->mlx);
-	}
-	if (game->imgs)
-	{
-		mlx_destroy_image(game->mlx->mlx, game->imgs->img);
-		mlx_destroy_window(game->mlx->mlx, game->mlx->win);
-		mlx_destroy_display(game->mlx->mlx);
-		free(game->imgs);
-	}
-	if(game->mlx)
-	{
-		mlx_destroy_display(game->mlx->mlx);
-		free(game->mlx);
-	} */
+void	free_player(t_player *player)
+{
+	if (player)
+		free(player);
+}
+void	free_game(t_game *game)
+{
+	if (!game)
+		return;
+	// Free each component
+	free_map(game->map);
+	free_texture(game->txt);
+	free_player(game->player);
+}
+
+

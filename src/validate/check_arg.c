@@ -6,12 +6,17 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:09:22 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/24 16:38:32 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/21 22:18:48 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+ * Function to check the number of arguments and the file extension.
+ * Exits the program with an error message if the arguments are invalid
+ * or the file cannot be opened.
+ */
 void	check_argc(int argc, char **argv)
 {
 	if (argc < 2)
@@ -23,6 +28,10 @@ void	check_argc(int argc, char **argv)
 	check_map_file(argv[1]);
 }
 
+/*
+ * Function to check the file extension.
+ * Returns 1 if the extension is valid, 0 otherwise.
+ */
 int	check_extension(char *filename)
 {
 	int	len;
@@ -35,6 +44,11 @@ int	check_extension(char *filename)
 	return (0);
 }
 
+/*
+ * Function to check if the map file exists and is not empty.
+ * Exits the program with an error message if the file does not exist or is
+ * empty.
+ */
 void	check_map_file(char *filename)
 {
 	int		fd;

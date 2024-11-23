@@ -6,12 +6,24 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:09:06 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/28 15:54:37 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/22 23:26:37 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*
+ * Function to check the texture identifiers in the file.
+ * Reads the file line by line and checks for the texture identifiers.
+ * If all identifiers are found, returns the line that starts the map section.
+ * If the map section starts before all identifiers are found, returns NULL.
+ * If an unknown identifier is found, prints an error message and returns NULL.
+ *
+ * fd: File descriptor of the map file.
+ * txt: Pointer to the texture structure.
+ *
+ * returns: The line that starts the map section or NULL.
+ */
 char	*check_texture(int fd, t_txt *txt)
 {
 	char	*line;
@@ -23,27 +35,22 @@ char	*check_texture(int fd, t_txt *txt)
 	while ((line = read_and_trim_line(fd)))
 	{
 		trimmed = ft_strtrim(line, " \t");
-		// Check if it's a map line (starts with '1' or '0' after trimming)
-		if (trimmed[0] == '1')
+		if (trimmed[0] == '1' || trimmed[0] == '0')
 		{
 			free(trimmed);
+			if (identifiers_found < 6)
+				ft_error("Missing one or more required texture identifiers.");
 			return (line);
-		} // Return the line if it starts the map section
-
-		// Parse texture/color identifiers
+		}
 		result = parse_texture(line, txt);
 		if (result == 1)
 			identifiers_found++;
 		else
-			printf("Invalid line in file (unknown identifier): %s\n", line);
-
-		free(line);  // Free the line only once
+			ft_printf("Invalid line in file (unknown identifier): %s\n", line);
+		free(line);
+		free(trimmed);
 	}
-	// Verify all required textures and colors are set
-	// // if (!txt->north || !txt->south || !txt->west || !txt->east || txt->floor_color == -1 || txt->ceiling_color == -1)
-	// // 	ft_error("Error: Missing required textures or colors.");
-	// // Verify that all required textures/colors were found
 	if (identifiers_found < 6)
-		ft_error("Error: Missing one or more required texture/color identifiers.");
+		ft_error("Missing one or more required texture/color identifiers.");
 	return (NULL);
 }
