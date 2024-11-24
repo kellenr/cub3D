@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 23:46:12 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/23 02:16:37 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:08:46 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,37 @@ void	render_frame(t_game *game)
 {
 	int		x;
 	int		y;
-	t_imgs	*img;
 
-	img = NULL;
-	init_imgs(game);
 	y = 0;
+	while (y < W_HEIGHT / 2)
+	{
+		x = 0;
+		while (x < W_WIDTH)
+		{
+			my_mlx_pixel_put(game->imgs, x, y, 0x87CEEB);
+			x++;
+		}
+		y++;
+	}
+	y = W_HEIGHT / 2;
 	while (y < W_HEIGHT)
 	{
 		x = 0;
 		while (x < W_WIDTH)
 		{
-			frame_img_pix(game, img, x, y);
+			my_mlx_pixel_put(game->imgs, x, y, 0x8B4513);
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(game->mlx, game->win, img->img, 0, 0);
-	mlx_destroy_image(game->mlx, img->img);
-}
-
-void	rendercast(t_game *game)
-{
-	init_pix(game);
-	// clean raycast ??
 	raycast(game);
-	render_frame(game);
+	mlx_put_image_to_window(game->mlx, game->win, game->imgs->img, 0, 0);
 }
 
 int	render(t_game *game)
 {
 	handle_movement(game);
-	rendercast(game);
+	memset(game->imgs->pix, 0, W_HEIGHT * game->imgs->ln_len);
+	render_frame(game);
 	return (0);
 }

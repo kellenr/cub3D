@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 22:59:17 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/23 01:46:49 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/24 17:01:07 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,35 @@ void	get_txt(t_game *game, t_ray *ray)
 	}
 }
 
-void	draw_line(t_game *game, t_txt *txt, t_ray *ray, int x)
+void	draw_line(t_game *game, t_ray *ray, int x, int color)
 {
-	int	y;
-	int	color;
+	// int	y;
+	// int	color;
 
-	get_txt(game, ray);
-	ray->tex_x = (int)(ray->wall_x * (double)txt->size_w);
-	if ((ray->side == 0 && ray->ray_dir_x < 0) || (ray->side == 1 && ray->ray_dir_y > 0))
-		ray->tex_x = txt->size_w - ray->tex_x - 1;
-	ray->step = 1.0 * txt->size_h / ray->line_height;
-	ray->tex_pos = (ray->draw_start - W_HEIGHT / 2 + ray->line_height / 2) * ray->step;
+	// get_txt(game, ray);
+	// ray->tex_x = (int)(ray->wall_x * (double)txt->size_w);
+	// if ((ray->side == 0 && ray->ray_dir_x < 0) || (ray->side == 1 && ray->ray_dir_y > 0))
+	// 	ray->tex_x = txt->size_w - ray->tex_x - 1;
+	// ray->step = 1.0 * txt->size_h / ray->line_height;
+	// ray->tex_pos = (ray->draw_start - W_HEIGHT / 2 + ray->line_height / 2) * ray->step;
+	// y = ray->draw_start;
+	// while (y < ray->draw_end)
+	// {
+	// 	ray->tex_y = (int)ray->tex_pos & (txt->size_h - 1);
+	// 	ray->tex_pos += ray->step;
+	// 	color = game->txt_data[txt->id][txt->size_w * ray->tex_y + ray->tex_x];
+	// 	if (txt->id == NORTH || txt->id == EAST)
+	// 		color = (color >> 1) & 8355711;
+	// 	if (color > 0)
+	// 		game->txt_pix[y][x] = color;
+	// 	y++;
+	// }
+	int	y;
+
 	y = ray->draw_start;
-	while (y < ray->draw_end)
+	while (y <= ray->draw_end)
 	{
-		ray->tex_y = (int)ray->tex_pos & (txt->size_h - 1);
-		ray->tex_pos += ray->step;
-		color = game->txt_data[txt->id][txt->size_w * ray->tex_y + ray->tex_x];
-		if (txt->id == NORTH || txt->id == EAST)
-			color = (color >> 1) & 8355711;
-		if (color > 0)
-			game->txt_pix[y][x] = color;
+		my_mlx_pixel_put(game->imgs, x, y, color);
 		y++;
 	}
 }

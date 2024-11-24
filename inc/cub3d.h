@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:42:29 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/23 02:13:37 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:45:45 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	init_pix(t_game *game);
 void	init_txt_path(t_game *game, t_imgs *img, char *path);
 void	init_textures(t_game *game);
 int	*ft_xpm(t_game *game, char *path);
-void	draw_line(t_game *game, t_txt *txt, t_ray *ray, int x);
+void	draw_line(t_game *game, t_ray *ray, int x, int color);
 void	frame_img_pix(t_game *game, t_imgs *img, int x, int y);
 void	render_frame(t_game *game);
 void	rendercast(t_game *game);

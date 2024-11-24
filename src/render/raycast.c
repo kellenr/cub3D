@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 22:32:22 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/23 01:37:13 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/24 16:59:18 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	raycast(t_game *game)
 {
 	t_ray	ray;
 	int		x;
+	int		color;
 
 	x = 0;
 	while (x < W_WIDTH)
@@ -145,7 +146,11 @@ int	raycast(t_game *game)
 		calculate_step_and_side_dist(&ray, game);
 		perform_dda(&ray, game);
 		calculate_wall_height(&ray, game->player);
-		draw_line(game, game->txt, &ray, x);
+		if (ray.side == 1)
+			color = 0x800080; // purple for horizontal walls
+		else
+			color = 0xFFC0CB; // pink for vertical walls
+		draw_line(game, &ray, x, color);
 		x++;
 	}
 	return (0);
