@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:53:49 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/23 02:15:29 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/25 01:56:28 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,3 +96,7 @@ int	*ft_xpm(t_game *game, char *path)
 	mlx_destroy_image(game->mlx, img.img);
 	return (i);
 }
+// unsigned char *pixel = (unsigned char *)(img.pix + y * img.ln_len + x * (img.bitp / 8));
+			// Assuming pixel data is in 0xAARRGGBB format
+			// Adjust based on your MLX setup
+			// i[game->txt->size_w * y + x] = (pixel[2] << 16) | (pixel[1] << 8) | (pixel[0]);

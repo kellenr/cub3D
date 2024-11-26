@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:17:40 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/21 22:10:12 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:27:13 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,7 @@ void	start_intro(t_game *game)
 }
 
 
-// static void	start_screen(t_game *g)
+// void	load_intro(t_game *game, t_paths *paths)
 // {
-// 	int		h;
-// 	int		w;
-// 	void	*img;
 
-// 	h = HEIGHT;
-// 	w = WIDTH;
-// 	img = (g->win->mlx, START, &w, &h);
-// 	mlx_put_image_to_window(g->win->mlx, g->win->win, img,
-// 		(WIDTH - 1800) / 2, (HEIGHT - 900) / 2);
-// 	mlx_destroy_image(g->win->mlx, img);
-// 	g->draw = 0;
 // }

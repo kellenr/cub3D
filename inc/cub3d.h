@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:42:29 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/24 16:45:45 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/25 00:52:50 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int		validate_player_count(int player_count);
 
 void	initialize_game(t_game *game);
 void	init_mlx(t_game *game);
-t_imgs	*init_imgs(t_game *game);
-t_txt	*init_txt(t_game *game);
-t_map	*init_map(t_game *game);
-t_player	*init_player(void);
+void	init_imgs(t_game *game);
+void	init_txt(t_game *game);
+void	init_map(t_game *game);
+void	init_player(t_game *game);
 
 /*                                 Parsing                                    */
 
@@ -134,21 +134,19 @@ void	init_ray(t_ray *ray, t_game *game, int x);
 void	calculate_step_and_side_dist(t_ray *ray, t_game *game);
 void	perform_dda(t_ray *ray, t_game *game);
 void	calculate_wall_height(t_ray *ray, t_player *player);
-void	draw_rectangle(t_imgs *img, int x, int y, int color, int size);
-void	render_minimap(t_game *game);
 void	my_mlx_pixel_put(t_imgs *img, int x, int y, int color);
+void	draw_line(t_game *game, t_ray *ray, int x);
+void	render_frame(t_game *game);
+int		render(t_game *game);
+void	get_wall(t_game *game, t_ray *ray);
 
 
 /* extra for the moment  */
-void	get_txt(t_game *game, t_ray *ray);
 void	init_pix(t_game *game);
 void	init_txt_path(t_game *game, t_imgs *img, char *path);
-void	init_textures(t_game *game);
+void	load_textures(t_game *game);
 int	*ft_xpm(t_game *game, char *path);
-void	draw_line(t_game *game, t_ray *ray, int x, int color);
 void	frame_img_pix(t_game *game, t_imgs *img, int x, int y);
-void	render_frame(t_game *game);
-void	rendercast(t_game *game);
-int	render(t_game *game);
+
 
 #endif

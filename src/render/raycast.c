@@ -6,37 +6,37 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 22:32:22 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/24 16:59:18 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:37:13 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void	init_ra(t_ray *ray)
-// {
-// 	ray->camera_x = 0;
-// 	ray->ray_dir_x = 0;
-// 	ray->ray_dir_y = 0;
-// 	ray->map_x = 0;
-// 	ray->map_y = 0;
-// 	ray->side_dist_x = 0;
-// 	ray->side_dist_y = 0;
-// 	ray->delta_dist_x = 0;
-// 	ray->delta_dist_y = 0;
-// 	ray->perp_wall_dist = 0;
-// 	ray->step_x = 0;
-// 	ray->step_y = 0;
-// 	ray->hit = 0;
-// 	ray->side = 0;
-// 	ray->line_height = 0;
-// 	ray->draw_start = 0;
-// 	ray->draw_end = 0;
-// 	ray->wall_x = 0;
-// 	ray->tex_x = 0;
-// 	ray->tex_y = 0;
-// 	ray->step = 0;
-// 	ray->tex_pos = 0;
-// }
+/* void	init_ra(t_ray *ray)
+{
+	ray->camera_x = 0;
+	ray->ray_dir_x = 0;
+	ray->ray_dir_y = 0;
+	ray->map_x = 0;
+	ray->map_y = 0;
+	ray->side_dist_x = 0;
+	ray->side_dist_y = 0;
+	ray->delta_dist_x = 0;
+	ray->delta_dist_y = 0;
+	ray->perp_wall_dist = 0;
+	ray->step_x = 0;
+	ray->step_y = 0;
+	ray->hit = 0;
+	ray->side = 0;
+	ray->line_height = 0;
+	ray->draw_start = 0;
+	ray->draw_end = 0;
+	ray->wall_x = 0;
+	ray->tex_x = 0;
+	ray->tex_y = 0;
+	ray->step = 0;
+	ray->tex_pos = 0;
+} */
 
 void	init_ray(t_ray *ray, t_game *game, int x)
 {
@@ -50,6 +50,7 @@ void	init_ray(t_ray *ray, t_game *game, int x)
 	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 	ray->hit = 0; // Initialize wall hit to false
 	ray->side = 0;
+
 }
 
 void	calculate_step_and_side_dist(t_ray *ray, t_game *game)
@@ -103,7 +104,9 @@ void	perform_dda(t_ray *ray, t_game *game)
 		}
 		// Check if ray has hit a wall
 		if (game->map->map_data[ray->map_y][ray->map_x] == '1')
+		{
 			ray->hit = 1;
+		}
 	}
 }
 
@@ -137,7 +140,7 @@ int	raycast(t_game *game)
 {
 	t_ray	ray;
 	int		x;
-	int		color;
+	// int		color;
 
 	x = 0;
 	while (x < W_WIDTH)
@@ -146,11 +149,11 @@ int	raycast(t_game *game)
 		calculate_step_and_side_dist(&ray, game);
 		perform_dda(&ray, game);
 		calculate_wall_height(&ray, game->player);
-		if (ray.side == 1)
-			color = 0x800080; // purple for horizontal walls
-		else
-			color = 0xFFC0CB; // pink for vertical walls
-		draw_line(game, &ray, x, color);
+		// if (ray.side == 1)
+		// 	color = 0x800080; // purple for horizontal walls
+		// else
+		// 	color = 0xFFC0CB; // pink for vertical walls
+		draw_line(game, &ray, x);
 		x++;
 	}
 	return (0);

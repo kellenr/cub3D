@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:07:02 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/23 02:08:00 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/25 01:55:52 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,79 +36,85 @@ void	initialize_game(t_game *game)
  * Function to initialize the images structure
  * Returns a pointer to t_imgs on success, exits on failure
  */
-t_txt	*init_txt(t_game *game)
+void	init_txt(t_game *game)
 {
-	t_txt	*txt;
-
-	txt = malloc(sizeof(t_txt));
-	if (!txt)
+	game->txt = malloc(sizeof(t_txt));
+	if (!game->txt)
 	{
 		if (game->mlx)
 			free(game->mlx);
 		ft_error("Failed to allocate memory for txt");
 	}
-	txt->north = NULL;
-	txt->south = NULL;
-	txt->west = NULL;
-	txt->east = NULL;
-	txt->sprite = NULL;
-	txt->floor_color = -1;
-	txt->ceiling_color = -1;
-	return (txt);
+	game->txt->north = NULL;
+	game->txt->south = NULL;
+	game->txt->west = NULL;
+	game->txt->east = NULL;
+	game->txt->sprite = NULL;
+	game->txt->floor_color = -1;
+	game->txt->ceiling_color = -1;
 }
 
 /*
  * Function to initialize the map structure
  * Returns a pointer to t_map on success, exits on failure
  */
-t_map	*init_map(t_game *game)
+void	init_map(t_game *game)
 {
-	t_map	*map;
-
-	map = malloc(sizeof(t_map));
-	if (!map)
+	game->map = malloc(sizeof(t_map));
+	if (!game->map)
 	{
 		if (game->txt)
 			free(game->txt);
 		ft_error("Failed to allocate memory for map");
 	}
-	map->map_data = NULL;
-	map->width = 0;
-	map->height = 0;
-	return (map);
+	game->map->map_data = NULL;
+	game->map->width = 0;
+	game->map->height = 0;
 }
 
 /*
  * Function to initialize the player structure
  * Returns a pointer to t_player on success, exits on failure
  */
-t_player	*init_player(void)
+void	init_player(t_game *game)
 {
-	t_player	*player;
-
-	player = malloc(sizeof(t_player));
-	if (!player)
+	game->player = malloc(sizeof(t_player));
+	if (!game->player)
 		ft_error("Failed to allocate memory for player");
-	player->x = 0.0f;
-	player->y = 0.0f;
-	player->dir_x = 0.0f;
-	player->dir_y = 0.0f;
-	player->plane_x = 0.0f;
-	player->plane_y = 0.0f;
-	player->angle = 0.0f;
-	player->di = 'N';
-	return (player);
+	game->player->x = 0.0f;
+	game->player->y = 0.0f;
+	game->player->dir_x = 0.0f;
+	game->player->dir_y = 0.0f;
+	game->player->plane_x = 0.0f;
+	game->player->plane_y = 0.0f;
+	game->player->angle = 0.0f;
+	game->player->di = 'N';
 }
 
-
-void	init_textures(t_game *game)
+void	verify_textures(t_game *game)
 {
-	game->txt_data = malloc(sizeof(int *) * 5);
+	for (int i = 0; i < TXT_N; i++)
+	{
+		if (game->txt_data[i] == NULL)
+		{
+			printf("Texture %d is NULL\n", i);
+		}
+		else
+		{
+			printf("Texture %d loaded with first color: 0x%X\n", i, game->txt_data[i][0]);
+		}
+	}
+}
+
+void	load_textures(t_game *game)
+{
+	game->txt_data = malloc(sizeof(int *) * TXT_COUNT);
 	if (!game->txt_data)
 		ft_error("Failed to allocate memory for txt_data");
 	game->txt_data[NORTH] = ft_xpm(game, game->txt->north);
 	game->txt_data[SOUTH] = ft_xpm(game, game->txt->south);
 	game->txt_data[WEST] = ft_xpm(game, game->txt->west);
 	game->txt_data[EAST] = ft_xpm(game, game->txt->east);
-	game->txt_data[SPRITE] = ft_xpm(game, game->txt->sprite);
+	printf("Load textures\n");
+	verify_textures(game);
 }

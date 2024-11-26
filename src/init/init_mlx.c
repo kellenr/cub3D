@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:28:23 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/23 02:00:02 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/25 02:31:19 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,17 @@ void	init_mlx(t_game *game)
  * Function to initialize the images structure
  * Returns a pointer to t_imgs on success, exits on failure
  */
-t_imgs	*init_imgs(t_game *game)
+void	init_imgs(t_game *game)
 {
-	t_imgs	*imgs;
-
-	imgs = malloc(sizeof(t_imgs));
-	if (!imgs)
-		ft_error("Failed to allocate memory for images");
-	imgs->img = mlx_new_image(game->mlx, W_WIDTH, W_HEIGHT);
-	if (!imgs->img)
+	game->imgs = malloc(sizeof(t_imgs));
+	game->imgs->img = mlx_new_image(game->mlx, W_WIDTH, W_HEIGHT);
+	if (!game->imgs->img)
 	{
-		free(imgs);
+		free(game->imgs);
 		ft_error("Failed to create image");
 	}
-	imgs->pix = mlx_get_data_addr(imgs->img, &imgs->bitp, &imgs->ln_len, \
-				&imgs->endian);
-	return (imgs);
+	game->imgs->pix = mlx_get_data_addr(game->imgs->img, &game->imgs->bitp, &game->imgs->ln_len, \
+				&game->imgs->endian);
 }
 
 void	init_txt_path(t_game *game, t_imgs *img, char *path)

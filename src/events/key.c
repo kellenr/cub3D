@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:11:59 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/22 17:01:29 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/24 22:23:01 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	key_handler(int keycode, t_game *game)
 	if (keycode == XK_Escape)
 		close_handler(game);
 	if(keycode == XK_KP_Enter || keycode == XK_Return)
+	{
 		mlx_clear_window(game->mlx, game->win);
+		game->intro_active = 0;
+	}
 	return (0);
 }
 

@@ -6,21 +6,23 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:40 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/23 01:31:01 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/25 01:55:24 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
+# define TXT_N 4
 /* Paths */
 typedef enum e_paths
 {
-	NORTH,
-	SOUTH,
-	WEST,
-	EAST,
-	SPRITE,
+	NORTH = 0,
+	SOUTH = 1,
+	WEST = 2,
+	EAST = 3,
+	SPRITE = 4,
+	TXT_COUNT = 4,
 }			t_paths;
 /*
  * Structure for the player
@@ -110,14 +112,12 @@ typedef struct s_txt
 	char	*sprite;
 	int		floor_color;
 	int		ceiling_color;
-	unsigned int	hexa_c;
-	unsigned int	hexa_f;
 	int		size_h;
 	int		size_w;
 	double	step;
 	double	tex_pos;
 	int		id;
-
+	t_imgs	txt[TXT_N];
 }			t_txt;
 
 

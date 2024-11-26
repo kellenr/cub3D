@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 20:18:14 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/22 23:20:37 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/11/25 00:54:06 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	parse_file(t_game *game, char *filename)
 	char	*line;
 
 	fd = open_file(filename);        // Open the file
-	game->txt = init_txt(game);      // Initialize the texture structure
-	game->map = init_map(game);      // Initialize the map structure
+	init_txt(game);      // Initialize the texture structure
+	init_map(game);      // Initialize the map structure
 	line = check_texture(fd, game->txt);    // Parse textures and colors
 	load_map(fd, game->map, line);         // Parse the map
 	close(fd);                      // Close the file
 	validate_map(game);             // Validate the map
-	game->player = init_player();
+	init_player(game);
 	initialize_player(game);
 }
