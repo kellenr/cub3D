@@ -5,58 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 15:18:19 by keramos-          #+#    #+#             */
-/*   Updated: 2024/10/28 20:07:15 by keramos-         ###   ########.fr       */
+/*   Created: 2023/02/09 22:44:18 by alexa             #+#    #+#             */
+/*   Updated: 2024/11/27 19:45:13 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	print_textures(t_txt *txt)
-{
-	printf("North texture: %s\n", txt->north ? txt->north : "Not set");
-	printf("South texture: %s\n", txt->south ? txt->south : "Not set");
-	printf("West texture: %s\n", txt->west ? txt->west : "Not set");
-	printf("East texture: %s\n", txt->east ? txt->east : "Not set");
-
-	// Print floor and ceiling colors in RGB format if they are set
-	if (txt->floor_color >= 0)
-		printf("Floor color: #%06X\n", txt->floor_color);
-	else
-		printf("Floor color: Not set\n");
-
-	if (txt->ceiling_color >= 0)
-		printf("Ceiling color: #%06X\n", txt->ceiling_color);
-	else
-		printf("Ceiling color: Not set\n");
-}
 
 void	print_map(t_map *map)
 {
 	int	i;
 
 	i = 0;
-	while (map->map_data[i])
+	while (i < map->height)
 	{
-		ft_printf("%s\n", map->map_data[i]); // Using ft_printf from libft to print the map lines
+		ft_printf("%s\n", map->map_data[i]);
 		i++;
 	}
 }
 
+void	print_texture(t_txt *txt)
+{
+	ft_printf("NO: %s\n", txt->north);
+	ft_printf("SO: %s\n", txt->south);
+	ft_printf("WE: %s\n", txt->west);
+	ft_printf("EA: %s\n", txt->east);
+	ft_printf("S: %s\n", txt->sprite);
+	ft_printf("F: %d\n", txt->floor_color);
+	ft_printf("C: %d\n", txt->ceiling_color);
+}
 
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
-
+	initialize_game(&game);
 	check_argc(argc, argv);
 	parse_file(&game, argv[1]);
-	init_game(&game);
-	print_map(game.map);
-	ft_printf("🎮 Starting the game with map: %s\n", argv[1]);
+	art(argv[1]);
+	// print_map(game.map);
+	// print_texture(&game.txt);
 	init_mlx(&game);
-	start_intro(&game);
-	mlx_loop(game.mlx->mlx);
-	free(game.mlx);
+	init_imgs(&game);
+	load_txt(&game);
+	ft_events(&game);
+	mlx_loop_hook(game.mlx, &start_game, &game);
+	mlx_loop(game.mlx);
 	return (0);
 }
