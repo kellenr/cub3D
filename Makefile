@@ -6,7 +6,7 @@
 #    By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 11:33:43 by keramos-          #+#    #+#              #
-#    Updated: 2024/10/26 00:00:00 by keramos-         ###   ########.fr        #
+#    Updated: 2024/11/27 02:35:59 by keramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = cub3D
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -g
+CFLAGS = -Wall -Wextra -Werror -g
 
 LIBFT = ./Libft/libft.a
 
@@ -68,12 +68,17 @@ STEP_NUM := 0
 # **************************************************************************** #
 
 SRCS = cub3d.c \
-		src/validate/check_arg.c src/validate/check_texture.c \
-		src/validate/check_map.c \
-		src/utils/ft_error.c src/utils/clean.c src/utils/utils.c \
-		src/init/init_mlx.c src/init/init_game.c \
-		src/events/key.c src/events/intro.c \
-		src/parsing/texture.c src/parsing/parsing.c src/parsing/map.c
+	sources/validate/check_arg.c sources/validate/check_texture.c \
+	sources/validate/check_layout.c sources/validate/check_map.c \
+	sources/init/init_game.c sources/init/init_mlx.c sources/init/init_txt.c \
+	sources/utils/art.c sources/utils/clean_close.c sources/utils/ft_error.c \
+	sources/utils/utils.c sources/utils/free.c \
+	sources/parsing/parsing.c sources/parsing/texture.c sources/parsing/map.c \
+	sources/parsing/player.c \
+	sources/events/key.c sources/events/moves.c sources/events/rotate.c \
+	sources/render/raycasting.c sources/render/draw_textures.c \
+	sources/render/render.c sources/render/game_loop.c
+
 
 OBJS = $(SRCS:.c=.o)
 

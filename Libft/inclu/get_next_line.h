@@ -32,5 +32,4 @@ void	*gnl_calloc(size_t nmemb, size_t size);
 char	*gnl_strjoin(char const *s1, char const *s2);
 char	*gnl_strdup(const char *s);
 
-
 #endif
