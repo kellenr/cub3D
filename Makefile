@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 11:33:43 by keramos-          #+#    #+#              #
-#    Updated: 2024/11/27 02:35:59 by keramos-         ###   ########.fr        #
+#    Updated: 2025/01/29 20:04:20 by keramos-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ NAME = cub3D
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -O3
 
 LIBFT = ./Libft/libft.a
 
@@ -77,10 +77,13 @@ SRCS = cub3d.c \
 	sources/parsing/player.c \
 	sources/events/key.c sources/events/moves.c sources/events/rotate.c \
 	sources/render/raycasting.c sources/render/draw_textures.c \
-	sources/render/render.c sources/render/game_loop.c
+	sources/render/render.c sources/render/game_loop.c sources/render/minimap.c \
+	sources/parsing/doors.c
 
 
-OBJS = $(SRCS:.c=.o)
+OBJS_DIR = objs/
+
+OBJS = $(SRCS:%.c=$(OBJS_DIR)%.o)
 
 
 # **************************************************************************** #
@@ -140,8 +143,18 @@ $(NAME): $(OBJS) $(LIBFT) $(LIB)
 	@$(CC) $(INCLUDES) $(OBJS) $(LIBFT) $(LIB) $(MLXFLAGS) -o $@ > /dev/null
 	@echo "${CHECK} Compiling utilities and grafics!         🎮"
 
-%.o: %.c
-	@${CC} $(INCLUDES) ${CFLAGS} -c $< -o $@ > /dev/null
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)/sources/validate
+	@mkdir -p $(OBJS_DIR)/sources/init
+	@mkdir -p $(OBJS_DIR)/sources/utils
+	@mkdir -p $(OBJS_DIR)/sources/parsing
+	@mkdir -p $(OBJS_DIR)/sources/events
+	@mkdir -p $(OBJS_DIR)/sources/render
+	@echo "${CHECK} Object directory created!         📁"
+
+$(OBJS_DIR)%.o: %.c | $(OBJS_DIR)
+	@$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@ > /dev/null
 
 End :
 	@echo "${PINK}Cub3D...${RT}";
@@ -154,7 +167,7 @@ End :
 clean:
 	@echo "${ORG}==> Cleaning up object files...${1}${RT}"
 	@$(MAKE) clean -C Libft > /dev/null
-	@$(RM) $(OBJS)
+	@$(RM) $(OBJS_DIR)
 	@$(MAKE) clean -C mlx > /dev/null
 	@echo "${CHECK} Cleanup complete               🧹"
 

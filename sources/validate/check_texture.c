@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:09:06 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 01:50:34 by keramos-         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:54:43 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 char	*get_texture_path(char *line, int j)
 {
@@ -61,9 +60,6 @@ int	parse_texture(char *line, t_txt *txt)
 		txt->ceiling_color = extract_rgb(line + 1);
 	else
 		return 0;
-	// free(line);
-	// if (!txt->north || !txt->south || !txt->west || !txt->east)
-	// 	ft_error("Error: Invalid texture path.");
 	return 1;
 }
 
@@ -95,4 +91,41 @@ int	extract_rgb(char *line)
 	}
 	free_split(rgb);
 	return ((r << 16) | (g << 8) | b);
+}
+
+/*
+ * Function to check the file extension.
+ * Returns 1 if the extension is valid, 0 otherwise.
+ */
+int	extension(char *filename)
+{
+	int	len;
+	int	ext_len;
+
+	len = ft_strlen(filename);
+	ext_len = ft_strlen(TXT_EXTS);
+	if (len > ext_len && ft_strcmp(filename + len - ext_len, TXT_EXTS) == 0)
+		return (1);
+	return (0);
+}
+
+/*
+ * Function to check if a file exists and is not empty.
+ * Returns 1 if the file is valid, 0 otherwise.
+ */
+int	check_file(char *filename)
+{
+	int		fd;
+	char	buffer[1];
+
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	if (read(fd, buffer, 1) <= 0)
+	{
+		close(fd);
+		return (0);
+	}
+	close(fd);
+	return (1);
 }

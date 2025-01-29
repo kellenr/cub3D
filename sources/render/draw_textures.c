@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 22:32:22 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 19:38:02 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:43:10 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,28 @@ void	draw_line(t_game *game, int x)
 {
 	int	y;
 	int	color;
+
+	game->ray.step = 1.0 * game->txt.size / game->ray.line_height;
+	game->ray.tex_pos = (game->ray.draw_start - W_HEIGHT / 2
+			+ game->ray.line_height / 2) * game->ray.step;
+	y = game->ray.draw_start;
+	while (y < game->ray.draw_end)
+	{
+		game->ray.tex_y = (int)game->ray.tex_pos & (game->txt.size - 1);
+		game->ray.tex_pos += game->ray.step;
+		color = *(unsigned int *)(game->ray.wall
+				+ (game->ray.tex_y * game->txt.size
+					+ game->ray.tex_x) * (game->txt.bitp / 8));
+		draw_pixel(&game->imgs, x, y, color);
+		y++;
+	}
+}
+
+
+/* void	draw_line(t_game *game, int x)
+{
+	int	y;
+	int	color;
 	int	bitp;
 
 	bitp = game->txt.bitp;
@@ -84,7 +106,7 @@ void	draw_line(t_game *game, int x)
 		draw_pixel(&game->imgs, x, y, color);
 		y++;
 	}
-}
+} */
 
 /*
 	int	y;

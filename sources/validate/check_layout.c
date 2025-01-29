@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_layout.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 22:33:03 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/22 23:08:42 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:01:43 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ char	get_map_char(t_map *map, int row, int col)
 int	is_valid_char(char c)
 {
 	if (c == ' ' || c == '0' || c == '1' ||
-		c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		c == 'N' || c == 'S' || c == 'E' ||
+		c == 'W' || c == 'D')
 		return (1);
 	return (0);
 }

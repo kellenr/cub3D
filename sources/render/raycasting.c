@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 22:32:22 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 19:29:27 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:13:50 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	perform_dda(t_game *game)
 			game->ray.map_y += game->ray.step_y;
 			game->ray.side = 1;
 		}
-		if (game->map->map_data[game->ray.map_y][game->ray.map_x] == '1')
+		if (game->map->map_data[game->ray.map_y][game->ray.map_x] == '1' ||
+			game->map->map_data[game->ray.map_y][game->ray.map_x] == 'D')
 			game->ray.hit = 1;
 	}
 }
@@ -101,7 +102,7 @@ int	raycast(t_game *game)
 	int	x;
 
 	x = 0;
-	render_frame(game);
+	// render_frame(game);
 	while (x < W_WIDTH)
 	{
 		cast_ray(game, x);

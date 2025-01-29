@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:40 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 16:57:33 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:46:00 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,14 @@ typedef struct s_txt
 	char	*west;
 	char	*east;
 	char	*sprite;
+	char	*door;
 	int		floor_color;
 	int		ceiling_color;
 	t_imgs	no;
 	t_imgs	so;
 	t_imgs	we;
 	t_imgs	ea;
+	t_imgs	door_img;
 	int		bitp;
 	int		size;
 	int		index;
@@ -125,18 +127,14 @@ typedef struct s_txt
 }			t_txt;
 
 
-// typedef struct s_minimap
-// {
-// 	int		x;
-// 	int		y;
-// 	int		scale;
-// 	int		width;
-// 	int		height;
-// 	int		view;
-// 	int		tile_size;
-// 	t_imgs	*imgs;
-// 	char	**map;
-// }			t_minimap;
+typedef struct s_door
+{
+	int		x;
+	int		y;
+	int		open; // 0 = Closed, 1 = Opening, 2 = Open
+	double	timer;
+}			t_door;
+
 
 
 /*
@@ -205,6 +203,7 @@ typedef struct s_game
 	int			**txt_data;
 	int			**txt_pix;
 	int			intro_active;
+	int			mini_active;
 }			t_game;
 
 #endif

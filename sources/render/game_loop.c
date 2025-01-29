@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 02:12:31 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 19:42:38 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:22:26 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,18 @@ void	render_frame(t_game *game)
 		}
 		y++;
 	}
-
+	raycast(game);
+	// render_mini(game);
+	if (game->mini_active)
+		render_mini(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->imgs.img, 0, 0);
 }
 
 int	start_game(t_game *game)
 {
 	handle_movement(game);
-	raycast(game);
+	render_frame(game);
+	// raycast(game);
+	// render_mini(game);
 	return (0);
 }

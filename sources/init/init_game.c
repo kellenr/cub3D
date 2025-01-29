@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:07:02 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/26 23:07:00 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 19:24:55 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	initialize_game(t_game *game)
 	init_ray(&game->ray);
 	init_keys(&game->keys);
 	game->intro_active = 1; // Example default value
+	game->mini_active = 0; // Example default value
 }
 
 /*

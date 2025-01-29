@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:42:29 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 17:11:08 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:52:53 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,21 @@
 # define W_WIDTH 1920   // Set default width
 # define W_HEIGHT 960  // Set default height
 # define MAX_LINES 1024 // Adjust based on expected map size
-# define MOVE_SPEED 0.05
-# define ROT_SPEED 0.03
+# define MOVE_SPEED 0.006
+# define ROT_SPEED 0.01
 # define INTRO "textures/intro.xpm"
+#define DOOR_TEXTURE "texture/door.xpm"
 
 /* Mini map */
-# define MINIMAP_SCALE 5
-# define MINIMAP_SIZE 200
-# define MINIMAP_MARGIN 20
+# define CELL_SIZE 128
+# define MINI_CELL_SIZE 16
+# define MINI_PLAYER_SIZE 16
 
 /*  Colors mini map */
-#define COLOR_WALL 0x000000FF      // Blue walls
-#define COLOR_FLOOR 0x00FF00FF     // Green floor
-#define COLOR_PLAYER 0xFFFF00FF    // Yellow player
-#define COLOR_SPACE 0xFF0000FF // Red direction line
+#define COLOR_WALL 0x696969
+#define COLOR_FLOOR 0xFFFFFF
+#define COLOR_PLAYER 0x0000FF
+#define COLOR_SPACE 0x000000
 
 
 /* ************************************************************************** */
@@ -81,6 +82,8 @@ int		validate_map(t_game *game);
 int		check_adjacents_not_void(t_map *map, int row, int col);
 int		is_valid_char(char c);
 char	get_map_char(t_map *map, int row, int col);
+int		extension(char *filename);
+int		check_file(char *filename);
 
 /*                                  Init                                      */
 
@@ -145,64 +148,14 @@ void	coordinate_texture(t_game *game);
 void	correct_texture(t_game *game);
 void	render_frame(t_game *game);
 
+void	render_mini_player(t_game *game);
+void	render_mini_direction(t_game *game);
+void	render_mini_map(t_game *game);
+void	render_mini(t_game *game);
+void	draw_cell(int x, int y, int color, t_game *game);
+void	toggle_door(t_game *game);
 
 /* extra for the moment  */
 
 
 #endif
-
-
-/*
-void	check_argc(int argc, char **argv);
-int		check_extension(char *filename);
-void	check_map_file(char *filename);
-char	*check_texture(int fd, t_txt *txt);
-int		is_map_enclosed(t_map *map);
-char	get_map_char(t_map *map, int row, int col);
-int		is_valid_char(char c);
-int		check_adjacents_not_void(t_map *map, int row, int col);
-int		validate_map(t_game *game);
-int		validate_map_initial(t_map *map);
-int		process_cell(t_map *map, int row, int col, int *player_count);
-int		validate_player_count(int player_count);
-void	get_txt(t_game *game, t_ray *ray);
-void	init_pix(t_game *game);
-void	init_txt_path(t_game *game, t_imgs *img, char *path);
-void	init_textures(t_game *game);
-int	*ft_xpm(t_game *game, char *path);
-void	draw_line(t_game *game, t_ray *ray, int x, int color);
-void	frame_img_pix(t_game *game, t_imgs *img, int x, int y);
-void	render_frame(t_game *game);
-void	rendercast(t_game *game);
-int	render(t_game *game);
-void	clean_init(t_game *game);
-int		close_handler(t_game *game);
-int		open_file(char *filename);
-int		is_empty_line(char *line);
-char	*trim_whitespace(char *str);
-char	*read_and_trim_line(int fd);
-void	free_texture(t_txt *txt);
-void	free_player(t_player *player);
-void	free_map(t_map *map);
-void	free_game(t_game *game);
-
-int		key_handler(int keycode, t_game *game);
-void	display_intro(t_game *game);
-void	start_intro(t_game *game);
-void	ft_events(t_game *game);
-void	move_forward(t_game *game);
-void	move_backward(t_game *game);
-void	move_left(t_game *game);
-void	move_right(t_game *game);
-void	rotate_left(t_game *game);
-void	rotate_right(t_game *game);
-void	handle_movement(t_game *game);
-void	parse_file(t_game *game, char *filename);
-int		parse_texture(char *line, t_txt *txt);
-int		extract_rgb(char *line);
-void	load_map(int fd, t_map *map, char *first_line);
-void	calculate_map_dimensions(t_map *map);
-void	initialize_player(t_game *game);
-
-
- */

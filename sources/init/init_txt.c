@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_txt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 21:42:50 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 19:45:32 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:44:25 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_txt(t_txt *txt)
 	txt->west = NULL;
 	txt->east = NULL;
 	txt->sprite = NULL;
+	txt->door = NULL;
 	txt->floor_color = -1;
 	txt->ceiling_color = -1;
 	txt->size = 64;

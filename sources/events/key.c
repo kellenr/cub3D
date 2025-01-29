@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:11:59 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 19:42:59 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:03:34 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ int	key_handler(int keycode, t_game *game)
 		keys->rotate_left = 1;
 	else if (keycode == XK_Right)
 		keys->rotate_right = 1;
+	else if (keycode == XK_m)
+		game->mini_active = !game->mini_active;
+	else if (keycode == XK_space)
+		toggle_door(game);
+	else
 	if (keycode == XK_Escape)
 		close_handler(game);
 	// if(keycode == XK_KP_Enter || keycode == XK_Return)
