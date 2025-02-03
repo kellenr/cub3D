@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:42:29 by keramos-          #+#    #+#             */
-/*   Updated: 2025/01/29 20:52:53 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:00:16 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void	draw_cell(int x, int y, int color, t_game *game);
 void	toggle_door(t_game *game);
 
 /* extra for the moment  */
-
+void	free_textures_imgs(t_txt *txt, void *mlx);
+void	free_mlx(t_game *game);
 
 #endif

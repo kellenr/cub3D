@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 16:26:57 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/27 15:09:04 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:58:57 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,39 +46,57 @@ void	free_split(char **split)
 
 void	free_textures_imgs(t_txt *txt, void *mlx)
 {
+	if (!txt || !mlx)
+		return;
 	if (txt->no.img)
+	{
 		mlx_destroy_image(mlx, txt->no.img);
+		free(txt->north);
+		txt->no.img = NULL;
+	}
 	if (txt->so.img)
+	{
 		mlx_destroy_image(mlx, txt->so.img);
+		free(txt->south);
+		txt->so.img = NULL;
+	}
 	if (txt->we.img)
+	{
 		mlx_destroy_image(mlx, txt->we.img);
+		free(txt->west);
+		txt->we.img = NULL;
+	}
 	if (txt->ea.img)
+	{
 		mlx_destroy_image(mlx, txt->ea.img);
+		free(txt->east);
+		txt->ea.img = NULL;
+	}
 }
 
-// void	free_texture(t_txt *txt)
-// {
-// 	if (txt)
-// 	{
-// 		if (txt->north)
-// 			free(txt->north);
-// 		if (txt->south)
-// 			free(txt->south);
-// 		if (txt->west)
-// 			free(txt->west);
-// 		if (txt->east)
-// 			free(txt->east);
-// 		if (txt->sprite)
-// 			free(txt->sprite);
-// 		free(txt);
-// 	}
-// }
+void	free_mlx(t_game *game)
+{
 
-// void	free_player(t_player *player)
-// {
-// 	if (player)
-// 		free(player);
-// }
+	if (game->win)
+	{
+		mlx_destroy_window(game->mlx, game->win);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
+	if (game->imgs.img)
+	{
+		mlx_destroy_image(game->mlx, game->imgs.img);
+		mlx_destroy_window(game->mlx, game->win);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
+	free(game);
+}
 // void	free_game(t_game *game)
 // {
 // 	if (!game)
@@ -88,5 +106,3 @@ void	free_textures_imgs(t_txt *txt, void *mlx)
 // 	free_texture(game->txt);
 // 	free_player(game->player);
 // }
-
-

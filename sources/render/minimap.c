@@ -6,7 +6,7 @@
 /*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:48:09 by keramos-          #+#    #+#             */
-/*   Updated: 2025/01/29 20:12:15 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:01:13 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ void	render_mini_direction(t_game *game)
 	int	start_x;
 	int	start_y;
 
-	start_x = game->player.x * MINI_CELL_SIZE;
-	start_y = game->player.y * MINI_CELL_SIZE;
+	start_x = game->player.x;
+	start_y = game->player.y;
+	start_x *= MINI_CELL_SIZE;
+	start_y *= MINI_CELL_SIZE;
 	// draw_minimap_line(game, start_x, start_y, 0x00FF00);
 }
 

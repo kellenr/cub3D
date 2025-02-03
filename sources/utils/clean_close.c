@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_close.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:37:19 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/26 23:11:02 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/02/03 19:59:26 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,12 @@ void	clean_imgs(t_imgs *imgs)
 
 int	close_handler(t_game *game)
 {
-	if (!game)
-		exit(EXIT_FAILURE);
-	if (game->win && game->mlx)
-		mlx_destroy_window(game->mlx, game->win);
-	if (game->mlx)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-	}
-	// free_game(game);
+	free_map(game->map);
+	free_textures_imgs(&game->txt, game->mlx);
+	mlx_destroy_image(game->mlx, game->imgs.img);
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
 	exit(EXIT_SUCCESS);
 }
 
@@ -70,4 +66,3 @@ int	close_handler(t_game *game)
 // 	exit(EXIT_SUCCESS);
 // 	return (0);
 // }
-
