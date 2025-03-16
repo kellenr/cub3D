@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+         #
+#    By: kellen <kellen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 11:33:43 by keramos-          #+#    #+#              #
-#    Updated: 2025/01/29 20:04:20 by keramos-         ###   ########.fr        #
+#    Updated: 2025/03/16 01:30:43 by kellen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,29 +104,6 @@ Start :
 #Adding 2>&1 redirects both the standard output and standard error to /dev/null,
 #thus suppressing all command line outputs, including those from ar.
 $(LIB):
-	@if [ ! -d "mlx" ]; then \
-		echo "${BABY_BLUE}====>Cloning MiniLibX repository...${1}${RT}"; \
-		git clone https://github.com/42Paris/minilibx-linux.git mlx >/dev/null 2>&1; \
-		echo "${ORG}Downloading and compiling MiniLibX...${RT}"; \
-		i=1; \
-		while [ $$i -le $(TOTAL_STEPS) ]; do \
-			STEP_NUM=$$i; \
-			PERCENT=$$(expr $$i \* 100 / $(TOTAL_STEPS)); \
-			PROGRESS=$$(expr $$i \* 20 / $(TOTAL_STEPS)); \
-			printf "\rMLX: ["; \
-			printf "${GREEN}%0.s#${RT}" `seq 1 $$PROGRESS`; \
-			if [ $$PERCENT -lt 100 ]; then \
-				printf "%0.s-" `seq 1 $$(expr 20 - $$PROGRESS)`; \
-			fi; \
-			printf "] $$STEP_NUM/$(TOTAL_STEPS) - $$PERCENT%%"; \
-			sleep 0.15; \
-			i=$$(expr $$i + 1); \
-		done; \
-		echo ""; \
-		echo "${CHECK} MiniLibX cloned!         ✅"; \
-	else \
-		echo "${ORG}====> MiniLibX already cloned!${RT}"; \
-	fi
 	@make -s -C mlx >/dev/null 2>&1;
 	@echo "${CHECK} MLX compiled                 ✅"
 

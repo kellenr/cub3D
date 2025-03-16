@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_mlx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:28:23 by keramos-          #+#    #+#             */
-/*   Updated: 2025/02/03 20:02:56 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/03/16 01:37:00 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,11 @@ void	init_mlx(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 	{
-		free_mlx(game);
 		ft_error("Failed to initialize MLX");
 	}
 	game->win = mlx_new_window(game->mlx, W_WIDTH, W_HEIGHT, "Cub3D");
 	if (!game->win)
 	{
-		free_mlx(game);
 		ft_error("Failed to create window");
 	}
 }
@@ -48,7 +46,6 @@ void	init_imgs(t_game *game)
 				&game->imgs.endian);
 	if (!game->imgs.pix)
 	{
-		// free_mlx(game);
 		ft_error("Failed to get image data");
 	}
 	return ;

@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 22:44:18 by alexa             #+#    #+#             */
-/*   Updated: 2025/02/03 19:58:15 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/03/16 01:31:26 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/* void	print_map(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->height)
-	{
-		ft_printf("%s\n", map->map_data[i]);
-		i++;
-	}
-}
-
-void	print_texture(t_txt *txt)
-{
-	ft_printf("NO: %s\n", txt->north);
-	ft_printf("SO: %s\n", txt->south);
-	ft_printf("WE: %s\n", txt->west);
-	ft_printf("EA: %s\n", txt->east);
-	ft_printf("S: %s\n", txt->sprite);
-	ft_printf("F: %d\n", txt->floor_color);
-	ft_printf("C: %d\n", txt->ceiling_color);
-} */
 
 int	main(int argc, char **argv)
 {
@@ -51,3 +28,29 @@ int	main(int argc, char **argv)
 	mlx_loop(game.mlx);
 	return (0);
 }
+
+/* 
+@if [ ! -d "mlx" ]; then \
+		echo "${BABY_BLUE}====>Cloning MiniLibX repository...${1}${RT}"; \
+		git clone https://github.com/42Paris/minilibx-linux.git mlx >/dev/null 2>&1; \
+		echo "${ORG}Downloading and compiling MiniLibX...${RT}"; \
+		i=1; \
+		while [ $$i -le $(TOTAL_STEPS) ]; do \
+			STEP_NUM=$$i; \
+			PERCENT=$$(expr $$i \* 100 / $(TOTAL_STEPS)); \
+			PROGRESS=$$(expr $$i \* 20 / $(TOTAL_STEPS)); \
+			printf "\rMLX: ["; \
+			printf "${GREEN}%0.s#${RT}" `seq 1 $$PROGRESS`; \
+			if [ $$PERCENT -lt 100 ]; then \
+				printf "%0.s-" `seq 1 $$(expr 20 - $$PROGRESS)`; \
+			fi; \
+			printf "] $$STEP_NUM/$(TOTAL_STEPS) - $$PERCENT%%"; \
+			sleep 0.15; \
+			i=$$(expr $$i + 1); \
+		done; \
+		echo ""; \
+		echo "${CHECK} MiniLibX cloned!         ✅"; \
+	else \
+		echo "${ORG}====> MiniLibX already cloned!${RT}"; \
+	fi
+ */
