@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:11:59 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/16 00:48:53 by kellen           ###   ########.fr       */
+/*   Updated: 2025/01/29 20:03:34 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_events(t_game *game)
 	init_keys(&game->keys);
 	mlx_hook(game->win, KeyPress, KeyPressMask, key_handler, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, key_release, game);
+	// mlx_hook(fc->mlx_window, ButtonPress, ButtonPressMask, mouse_handler, fc);
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, \
 				close_handler, game);
 }

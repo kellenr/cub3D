@@ -6,11 +6,12 @@
 /*   By: keramos- <keramos-@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:09:22 by keramos-          #+#    #+#             */
-/*   Updated: 2024/11/26 22:45:36 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:30:36 by wvmontae         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "cub3d_validator.h"
 
 /*
  * Function to check the number of arguments and the file extension.
@@ -54,10 +55,15 @@ void	check_map_file(char *filename)
 	int		fd;
 	char	buffer[1];
 
+	// First check basic file access
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		ft_error("The map file does not exist or cannot be opened.");
 	if (read(fd, buffer, 1) <= 0)
 		ft_error("The map file is empty.");
 	close(fd);
+	
+	// Now use the validator library for detailed validation
+	if (validate_map_file(filename))
+		ft_error("Map validation failed. Check format and content.");
 }

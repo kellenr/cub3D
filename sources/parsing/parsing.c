@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
+/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 20:18:14 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/16 00:47:15 by kellen           ###   ########.fr       */
+/*   Updated: 2025/02/03 20:05:39 by keramos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,3 @@ void	parse_file(t_game *game, char *filename)
 	initialize_player(game);
 	free(line);
 }
-
