@@ -1,18 +1,18 @@
-NO ./src/textures/2.png
-SO ./src/textures/3.png
-WE ./src/textures/4.png
-EA ./src/textures/5.png
+NO texture/cobblestone.xpm
+SO texture/color_stone.xpm
+WE texture/wall1v.xpm
+EA texture/mycelium_top.xpm
 
 F 220,100,0
 C 225,30,0
 
 
-			  
-    
 
-	
-	  
-		
 
-		
-		  
+
+
+
+
+
+
+

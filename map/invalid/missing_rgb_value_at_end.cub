@@ -1,10 +1,10 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
+NO texture/cobblestone.xpm
+SO texture/color_stone.xpm
 
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+WE texture/wall1v.xpm
+EA texture/mycelium_top.xpm
 
-F 1,150,
+F ,150
 C 225,30,0
 
 1111

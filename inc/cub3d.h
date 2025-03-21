@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:42:29 by keramos-          #+#    #+#             */
-/*   Updated: 2025/02/03 20:00:16 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/03/21 04:12:18 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 #  define MMAP_DEBUG_MSG 0
 # endif
 
+# ifndef BONUS
+#  define BONUS 0
+# endif
+
 /* COLOR intro */
 # define RT			"\033[0m"
 # define R			"\033[1;31m"
@@ -39,13 +43,13 @@
 
 # define VALID_EXTS ".cub"
 # define TXT_EXTS ".xpm"
-# define W_WIDTH 1920   // Set default width
-# define W_HEIGHT 960  // Set default height
-# define MAX_LINES 1024 // Adjust based on expected map size
-# define MOVE_SPEED 0.006
-# define ROT_SPEED 0.01
-# define INTRO "textures/intro.xpm"
-#define DOOR_TEXTURE "texture/door.xpm"
+# define W_WIDTH 1920
+# define W_HEIGHT 960
+# define MAX_LINES 1024
+# define MOVE_SPEED 0.02
+# define ROT_SPEED 0.010
+# define INTRO1 "texture/intro1.xpm"
+# define DOOR1 "texture/wall2.xpm"
 
 /* Mini map */
 # define CELL_SIZE 128
@@ -53,11 +57,10 @@
 # define MINI_PLAYER_SIZE 16
 
 /*  Colors mini map */
-#define COLOR_WALL 0x696969
-#define COLOR_FLOOR 0xFFFFFF
-#define COLOR_PLAYER 0x0000FF
-#define COLOR_SPACE 0x000000
-
+# define COLOR_WALL 0x696969
+# define COLOR_FLOOR 0xFFFFFF
+# define COLOR_PLAYER 0x0000FF
+# define COLOR_SPACE 0xAAAAAA
 
 /* ************************************************************************** */
 /*                                   SRC                                      */
@@ -71,46 +74,56 @@ void	control_opction(const char *map_name);
 void	check_argc(int argc, char **argv);
 int		check_extension(char *filename);
 void	check_map_file(char *filename);
-int		parse_texture(char *line, t_txt *txt);
-int		extract_rgb(char *line);
-char	*get_texture_path(char *line, int j);
-int		validate_map_initial(t_map *map);
-int		validate_player_count(int player_count);
-int		process_cell(t_map *map, int row, int col, int *player_count);
-int		is_map_enclosed(t_map *map);
-int		validate_map(t_game *game);
-int		check_adjacents_not_void(t_map *map, int row, int col);
-int		is_valid_char(char c);
-char	get_map_char(t_map *map, int row, int col);
-int		extension(char *filename);
-int		check_file(char *filename);
+int		extract_rgb(t_game *game);
+void	validate_single_rgb(char *tk, char **tokens, t_game *game);
+void	validate_rgb_tokens(char **tokens, t_game *game);
+void	validate_color_ids(t_game *game);
+int		parse_texture(t_game *game);
+int		parse_texture2(t_game *game);
+int		parse_colors(t_game *game);
+void	validate_map(t_game *game);
+int		valid_player(t_game *game);
+int		valid_layout(t_game *game);
+int		is_valid_element(char c);
+int		validate_map_element(char c, int *p_count);
+int		is_adjacent_to_space(t_game *game, int y, int x);
+int		check_row_enclosed(t_game *game, int i);
+int		check_boundaries(t_game *game);
+int		check_spaces_adjacent(t_game *game);
 
 /*                                  Init                                      */
 
 void	initialize_game(t_game *game);
-void	init_mlx(t_game *game);
-void	init_imgs(t_game *game);
-void	init_txt(t_txt *txt);
 void	init_map(t_game *game);
-void	init_player(t_player *player);
 void	init_ray(t_ray *ray);
 void	init_keys(t_keys *keys);
-void	load_txt(t_game *game);
+void	init_player(t_player *player);
+void	init_mlx(t_game *game);
+void	init_imgs(t_game *game);
 void	init_txt_path(t_game *game, t_imgs *img, char *path);
+void	init_txt(t_txt *txt);
+int		load_textures(t_game *game);
 
 /*                                 Parsing                                    */
 
 void	parse_file(t_game *game, char *filename);
-char	*parse_texture_and_colors(int fd, t_txt *txt);
-void	load_map(int fd, t_map *map, char *first_line);
-void	calculate_map_dimensions(t_map *map);
-void	init_player_NO_SO(t_player *player);
-void	init_player_EA_WE(t_player *player);
+int		parse_content(t_game *game);
+char	*get_texture_path(t_game *game, int j);
+void	id_missing(t_game *game);
+int		validate_texture_path(t_game *game, char *path);
+int		is_valid_char(char c);
+int		is_valid_char(char c);
+int		is_valid_line(t_game *game);
+int		parse_map(t_game *game);
+int		is_map(t_game *game);
+int		valid_map_save(t_game *game);
+void	init_player_no_so(t_player *player);
+void	init_player_ea_we(t_player *player);
 void	initialize_player(t_game *game);
-
 
 /*                                  Event                                     */
 
+void	handle_game_keys(int keycode, t_game *game);
 int		key_handler(int keycode, t_game *game);
 int		key_release(int keycode, t_game *game);
 void	ft_events(t_game *game);
@@ -126,37 +139,67 @@ void	rotate_right(t_game *game);
 
 void	clean_imgs(t_imgs *imgs);
 int		close_handler(t_game *game);
-void	ft_error(char *str);
-int		open_file(char *filename);
-char	*read_and_trim_line(int fd);
-char	*trim_whitespace(char *str);
-int		is_empty_line(char *line);
-void	free_map(t_map *map);
 void	free_split(char **split);
+void	free_textures_imgs(t_txt *txt, void *mlx);
+void	free_mlx(t_game *game);
+void	clean_game(t_game *game);
+void	free_textures(t_txt *txt);
+void	free_game(t_game *game);
+void	free_map(t_map *map);
+void	ft_error(char *str);
+void	clean_error(t_game *game, char *msg);
+int		open_file(char *filename);
+int		is_empty_line(char *line);
+char	*trim_whitespace(char *str);
+int		check_element(t_game *game);
+void	save_map(t_game *game, int i);
+void	line_jump(t_game *game);
 
 /*                                 Render                                     */
 
-void	cast_ray(t_game *game, int x);
-void	calculate_step(t_game *game);
-void	perform_dda(t_game *game);
-void	calculate_wall(t_game *game);
-int		start_game(t_game *game);
-void	draw_line(t_game *game, int x);
-int		raycast(t_game *game);
-void	draw_pixel(t_imgs *img, int x, int y, int color);
-void	coordinate_texture(t_game *game);
-void	correct_texture(t_game *game);
+void	calculate_ray(t_game *game, t_ray *ray, int x);
+void	calculate_step_and_side_dist(t_game *game, t_ray *ray);
+void	perform_dda(t_game *game, t_ray *ray);
+void	calculate_wall_distance(t_game *game, t_ray *ray);
+void	determine_texture(t_game *game, t_ray *ray);
+void	cast_rays(t_game *game);
+
+void	put_pixel(t_game *game, int x, int y, int color);
+void	draw_ceiling(t_game *game, int x, int y_end);
+void	draw_floor(t_game *game, int x, int y_start);
+void	draw_wall_textured(t_game *game, int x);
+void	draw_vertical_line(t_game *game, int x);
 void	render_frame(t_game *game);
 
-void	render_mini_player(t_game *game);
-void	render_mini_direction(t_game *game);
-void	render_mini_map(t_game *game);
-void	render_mini(t_game *game);
-void	draw_cell(int x, int y, int color, t_game *game);
-void	toggle_door(t_game *game);
+int		load_textures(t_game *game);
+int		get_texture_pixel(t_imgs *img, int x, int y);
+int		create_rgb(int r, int g, int b);
+int		darken_color(int color, double factor);
+
+void	draw_map_square(t_game *game, int x, int y, int color);
+void	draw_player_on_minimap(t_game *game);
+void	draw_minimap(t_game *game);
+void	draw_player(t_game *game, int x, int y);
+void	draw_direction_line2(t_game *game, int pos[2], \
+			int end[2], int delta[2]);
+void	draw_direction_line(t_game *game, int start_x, int start_y);
+int		calc_line_error(int delta[2]);
+void	line_step_y(int pos[2], int step[2], int delta[2], int *err);
+void	line_step_x(int pos[2], int step[2], int delta[2], int *err);
+void	init_line_vars(int pos[2], int end[2], int delta[2], int step[2]);
+void	calc_dir_endpoint(t_game *game, int start_x, int start_y, int end[2]);
+
+/*                                 Game Loop                                  */
+
+void	display_intro(t_game *game);
+int		start_game(t_game *game);
+void	init_game_loop(t_game *game);
 
 /* extra for the moment  */
-void	free_textures_imgs(t_txt *txt, void *mlx);
-void	free_mlx(t_game *game);
+
+void	display_intro(t_game *game);
+void	start_intro(t_game *game);
+void	load_txt_bonus(t_game *game);
+void	toggle_door(t_game *game);
 
 #endif

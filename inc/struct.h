@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keramos- <keramos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:40 by keramos-          #+#    #+#             */
-/*   Updated: 2025/01/29 20:46:00 by keramos-         ###   ########.fr       */
+/*   Updated: 2025/03/21 04:01:16 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ typedef enum e_paths
  */
 typedef struct s_player
 {
-	double	x;			// Player's X position on the map
-	double	y;			// Player's Y position on the map
-	double	dir_x;		// X component of the direction vector
-	double	dir_y;		// Y component of the direction vector
-	double	plane_x;	// X component of the plane vector
-	double	plane_y;	// Y component of the plane vector
-	double	angle;		// Player's viewing angle
-	int		move_x;		// Player's movement in X direction
-	int		move_y;		// Player's movement in Y direction
-	char	di;	// Player's viewing direction
+	double	x;
+	double	y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	angle;
+	int		move_x;
+	int		move_y;
+	char	di;	
 }			t_player;
 
 /*
@@ -56,7 +56,7 @@ typedef struct s_map
 	char	**map_data;
 	int		width;
 	int		height;
-
+	int		num_lines;
 }			t_map;
 
 /*
@@ -74,11 +74,6 @@ typedef struct s_imgs
 	int		bitp;
 	int		ln_len;
 	int		endian;
-	// void	*intro_img;      // Add this line
-	// char	*intro_pix;      // And this if you need pixel data
-	// int		intro_bitp;
-	// int		intro_ln_len;
-	// int		intro_endian;
 }			t_imgs;
 
 typedef struct s_keys
@@ -103,19 +98,22 @@ typedef struct s_keys
  */
 typedef struct s_txt
 {
+	char	*txt_f[7];
 	char	*north;
 	char	*south;
 	char	*west;
 	char	*east;
 	char	*sprite;
 	char	*door;
+	char	*intro;
 	int		floor_color;
 	int		ceiling_color;
 	t_imgs	no;
 	t_imgs	so;
 	t_imgs	we;
 	t_imgs	ea;
-	t_imgs	door_img;
+	t_imgs	d;
+	t_imgs	i;
 	int		bitp;
 	int		size;
 	int		index;
@@ -123,19 +121,15 @@ typedef struct s_txt
 	double	tex_pos;
 	int		x;
 	int		y;
-
 }			t_txt;
-
 
 typedef struct s_door
 {
 	int		x;
 	int		y;
-	int		open; // 0 = Closed, 1 = Opening, 2 = Open
+	int		open;
 	double	timer;
 }			t_door;
-
-
 
 /*
  * Structure for the ray
@@ -178,7 +172,8 @@ typedef struct s_ray
 	int		tex_y;
 	double	step;
 	double	tex_pos;
-	char 	*wall;
+	char	wall;
+	t_imgs	*texture;
 }			t_ray;
 
 /*
@@ -193,6 +188,8 @@ typedef struct s_ray
 typedef struct s_game
 {
 	t_map		*map;
+	int			fd;
+	char		*n_line;
 	void		*mlx;
 	void		*win;
 	t_imgs		imgs;
@@ -202,8 +199,14 @@ typedef struct s_game
 	t_keys		keys;
 	int			**txt_data;
 	int			**txt_pix;
+	int			start;
+	int			line;
+	int			e_map;
+	int			s_map;
+	int			step[2];
 	int			intro_active;
 	int			mini_active;
+	int			bonus;
 }			t_game;
 
 #endif
