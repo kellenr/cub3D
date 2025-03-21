@@ -6,11 +6,13 @@
 #    By: kellen <kellen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 11:33:43 by keramos-          #+#    #+#              #
-#    Updated: 2025/03/16 01:45:40 by kellen           ###   ########.fr        #
+#    Updated: 2025/03/21 04:26:16 by kellen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
+
+NAME_BONUS = cub3D_bonus
 
 # **************************************************************************** #
 #                                 variables                                    #
@@ -19,6 +21,8 @@ NAME = cub3D
 CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g -O3
+
+CFLAGS_BONUS = -Wall -Wextra -Werror -g -O3 -D BONUS=1
 
 LIBFT = ./Libft/libft.a
 
@@ -69,35 +73,24 @@ STEP_NUM := 0
 # **************************************************************************** #
 
 SRCS = cub3d.c \
-	sources/validate/check_arg.c sources/validate/check_texture.c \
-	sources/validate/check_layout.c sources/validate/check_map.c \
-	sources/init/init_game.c sources/init/init_mlx.c sources/init/init_txt.c \
-	sources/utils/art.c sources/utils/clean_close.c sources/utils/ft_error.c \
-	sources/utils/utils.c sources/utils/free.c \
-	sources/parsing/parsing.c sources/parsing/texture.c sources/parsing/map.c \
-	sources/parsing/player.c \
-	sources/events/key.c sources/events/moves.c sources/events/rotate.c \
-	sources/render/raycasting.c sources/render/draw_textures.c \
-	sources/render/render.c sources/render/game_loop.c sources/render/minimap.c \
-	sources/parsing/doors.c \
-	validator_lib/cub3d_validator.c \
-	validator_lib/cub3d_file_parser.c \
-	validator_lib/cub3d_element_parser.c \
-	validator_lib/cub3d_map_parser.c \
-	validator_lib/cub3d_map_parser2.c \
-	validator_lib/cub3d_map_validator.c \
-	validator_lib/cub3d_map_validator_extra.c \
-	validator_lib/cub3d_utils.c \
-	validator_lib/cub3d_color_validator.c \
-	validator_lib/cub3d_color_validator_extra.c \
-	validator_lib/position/position_player.c \
-	validator_lib/position/position_empty.c \
-	validator_lib/validator_integration.c
+	init/init_game.c init/init_mlx.c init/init_txt.c init/init_map.c \
+	parsing/parsing.c parsing/texture.c parsing/map.c parsing/player.c \
+	parsing/doors.c \
+	utils/art.c utils/clean_close.c utils/free.c utils/ft_error.c utils/utils.c \
+	validate/check_arg.c validate/check_texture.c validate/check_color.c \
+	validate/check_map.c validate/check_layout.c \
+	event/key.c event/moves.c event/rotate.c event/intro.c \
+	render/draw_textures.c render/game_loop.c render/minimap.c \
+	render/raycasting.c render/render.c render/mini_drap.c
 
 
 OBJS_DIR = objs/
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)%.o)
+
+OBJS_BONUS_DIR = objs_bonus/
+
+OBJS_BONUS = $(SRCS:%.c=$(OBJS_BONUS_DIR)%.o)
 
 
 # **************************************************************************** #
@@ -105,6 +98,8 @@ OBJS = $(SRCS:%.c=$(OBJS_DIR)%.o)
 # **************************************************************************** #
 
 all: Start $(NAME) End
+
+bonus: Start $(NAME_BONUS) End
 
 Start :
 	@if [ -f $(NAME) ]; then \
@@ -152,6 +147,8 @@ $(LIBFT):
 # Ensure MLX and LIBFT are built before compiling the object files
 $(OBJS): $(LIB) $(LIBFT)
 
+$(OBJS_BONUS): $(LIB) $(LIBFT)
+
 $(NAME): $(OBJS) $(LIBFT) $(LIB)
 	$(call print_status,"Creating Cub3D...")
 	@$(CC) $(INCLUDES) $(OBJS) $(LIBFT) $(LIB) $(MLXFLAGS) -o $@ > /dev/null
@@ -159,18 +156,38 @@ $(NAME): $(OBJS) $(LIBFT) $(LIB)
 
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
-	@mkdir -p $(OBJS_DIR)/sources/validate
-	@mkdir -p $(OBJS_DIR)/sources/init
-	@mkdir -p $(OBJS_DIR)/sources/utils
-	@mkdir -p $(OBJS_DIR)/sources/parsing
-	@mkdir -p $(OBJS_DIR)/sources/events
-	@mkdir -p $(OBJS_DIR)/sources/render
-	@mkdir -p $(OBJS_DIR)/validator_lib
-	@mkdir -p $(OBJS_DIR)/validator_lib/position
+	@mkdir -p $(OBJS_DIR)validate
+	@mkdir -p $(OBJS_DIR)init
+	@mkdir -p $(OBJS_DIR)utils
+	@mkdir -p $(OBJS_DIR)parsing
+	@mkdir -p $(OBJS_DIR)event
+	@mkdir -p $(OBJS_DIR)render
 	@echo "${CHECK} Object directory created!         📁"
 
+# Rule for normal objects
 $(OBJS_DIR)%.o: %.c | $(OBJS_DIR)
 	@$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@ > /dev/null
+
+$(OBJS_BONUS): $(LIB) $(LIBFT)
+
+$(NAME_BONUS): $(OBJS_BONUS) $(LIBFT) $(LIB)
+	$(call print_status,"Creating Cub3D...")
+	@$(CC) $(INCLUDES) $(OBJS_BONUS) $(LIBFT) $(LIB) $(MLXFLAGS) -o $@ > /dev/null
+	@echo "${CHECK} Compiling utilities and grafics!         🎮"
+
+$(OBJS_BONUS_DIR):
+	@mkdir -p $(OBJS_BONUS_DIR)
+	@mkdir -p $(OBJS_BONUS_DIR)validate
+	@mkdir -p $(OBJS_BONUS_DIR)init
+	@mkdir -p $(OBJS_BONUS_DIR)utils
+	@mkdir -p $(OBJS_BONUS_DIR)parsing
+	@mkdir -p $(OBJS_BONUS_DIR)event
+	@mkdir -p $(OBJS_BONUS_DIR)render
+	@echo "${CHECK} Object directory created!         📁"
+
+# Rule for bonus objects
+$(OBJS_BONUS_DIR)%.o: %.c | $(OBJS_BONUS_DIR)
+	@$(CC) $(INCLUDES) $(CFLAGS_BONUS) -c $< -o $@ > /dev/null
 
 End :
 	@echo "${PINK}Cub3D...${RT}";
@@ -184,6 +201,7 @@ clean:
 	@echo "${ORG}==> Cleaning up object files...${1}${RT}"
 	@$(MAKE) clean -C Libft > /dev/null
 	@$(RM) $(OBJS_DIR)
+	@$(RM) $(OBJS_BONUS_DIR)
 	@$(MAKE) clean -C mlx > /dev/null
 	@echo "${CHECK} Cleanup complete               🧹"
 
@@ -191,6 +209,8 @@ fclean: clean
 	@echo "${ORG}==> Full clean - Removing executables...${1}${RT}"
 	@$(MAKE) fclean -C Libft > /dev/null
 	@$(RM) $(NAME)
+	@$(RM) $(NAME_BONUS)
+	@$(RM) mlx
 	@echo "${CHECK} Full cleanup complete          🧹"
 
 re: fclean all

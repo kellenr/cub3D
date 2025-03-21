@@ -1,9 +1,9 @@
 
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
+NO ./path_to_the_north_texture.xbm
+SO ./path_to_the_south_texture.xbm
 
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+WE ./path_to_the_west_texture.xbm
+EA ./path_to_the_east_texture.xbm
 
 F 34,139,34
 C 135,206,235
