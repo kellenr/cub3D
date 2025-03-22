@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 11:42:29 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/21 04:12:18 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/22 19:33:50 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,18 @@
 # define INTRO1 "texture/intro1.xpm"
 # define DOOR1 "texture/wall2.xpm"
 
-/* Mini map */
-# define CELL_SIZE 128
-# define MINI_CELL_SIZE 16
-# define MINI_PLAYER_SIZE 16
+// /* Mini map */
+# define MINIMAP_SIZE 128
+# define MINI_CELL_SIZE 7
+# define VIEWPORT_WIDTH 15
+# define VIEWPORT_HEIGHT 15
+# define MINIMAP_OFFSET 20
+# define PLAYER_DOT_SIZE 10
+
+/* Scoop minimap constants */
+# define SCOOP_SIZE 13
+# define MINI_SCOOP_CELL_SIZE 12
+# define SCOOP_MARGIN 20
 
 /*  Colors mini map */
 # define COLOR_WALL 0x696969
@@ -103,6 +111,7 @@ void	init_imgs(t_game *game);
 void	init_txt_path(t_game *game, t_imgs *img, char *path);
 void	init_txt(t_txt *txt);
 int		load_textures(t_game *game);
+void	load_extra(t_game *game);
 
 /*                                 Parsing                                    */
 
@@ -142,7 +151,6 @@ int		close_handler(t_game *game);
 void	free_split(char **split);
 void	free_textures_imgs(t_txt *txt, void *mlx);
 void	free_mlx(t_game *game);
-void	clean_game(t_game *game);
 void	free_textures(t_txt *txt);
 void	free_game(t_game *game);
 void	free_map(t_map *map);
@@ -150,7 +158,6 @@ void	ft_error(char *str);
 void	clean_error(t_game *game, char *msg);
 int		open_file(char *filename);
 int		is_empty_line(char *line);
-char	*trim_whitespace(char *str);
 int		check_element(t_game *game);
 void	save_map(t_game *game, int i);
 void	line_jump(t_game *game);
@@ -170,11 +177,6 @@ void	draw_floor(t_game *game, int x, int y_start);
 void	draw_wall_textured(t_game *game, int x);
 void	draw_vertical_line(t_game *game, int x);
 void	render_frame(t_game *game);
-
-int		load_textures(t_game *game);
-int		get_texture_pixel(t_imgs *img, int x, int y);
-int		create_rgb(int r, int g, int b);
-int		darken_color(int color, double factor);
 
 void	draw_map_square(t_game *game, int x, int y, int color);
 void	draw_player_on_minimap(t_game *game);
@@ -199,7 +201,17 @@ void	init_game_loop(t_game *game);
 
 void	display_intro(t_game *game);
 void	start_intro(t_game *game);
-void	load_txt_bonus(t_game *game);
 void	toggle_door(t_game *game);
+
+void	draw_mini_viewport(t_game *game);
+void	draw_scoop_map_tiles(t_game *game);
+void	draw_scoop_background(t_game *game);
+void	draw_scoop_border(t_game *game);
+void	draw_player_in_scoop(t_game *game);
+void	draw_direction_in_scoop(t_game *game);
+int		get_tile_color(char tile);
+char	get_map_tile(t_game *game, int map_x, int map_y);
+void	draw_map_square_scoop(t_game *game, int x, int y, int color);
+void	calculate_scoop_position(int *pos_x, int *pos_y);
 
 #endif

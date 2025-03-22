@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 15:13:40 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/21 04:01:16 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/21 09:06:07 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_player
 	double	angle;
 	int		move_x;
 	int		move_y;
-	char	di;	
+	char	di;
 }			t_player;
 
 /*
@@ -206,6 +206,7 @@ typedef struct s_game
 	int			step[2];
 	int			intro_active;
 	int			mini_active;
+	int			mini_scoop;
 	int			bonus;
 }			t_game;
 

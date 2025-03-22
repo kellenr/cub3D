@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 23:13:27 by kellen            #+#    #+#             */
-/*   Updated: 2025/03/21 04:25:19 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/21 18:48:35 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	extract_rgb(t_game *game)
 		clean_error(game, "RGB values must be between 0 and 255.");
 	}
 	free_split(rgb);
-	return ((r << 16) | (g << 8) | b);
+	return ((0xFF << 24) | (r << 16) | (g << 8) | b);
 }
 
 /*

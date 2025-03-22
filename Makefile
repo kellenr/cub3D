@@ -6,7 +6,7 @@
 #    By: kellen <kellen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/03 11:33:43 by keramos-          #+#    #+#              #
-#    Updated: 2025/03/21 04:26:16 by kellen           ###   ########.fr        #
+#    Updated: 2025/03/22 19:28:15 by kellen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,12 +76,14 @@ SRCS = cub3d.c \
 	init/init_game.c init/init_mlx.c init/init_txt.c init/init_map.c \
 	parsing/parsing.c parsing/texture.c parsing/map.c parsing/player.c \
 	parsing/doors.c \
-	utils/art.c utils/clean_close.c utils/free.c utils/ft_error.c utils/utils.c \
+	utils/art.c utils/clean_close.c utils/free.c utils/ft_error.c \
+	utils/utils.c \
 	validate/check_arg.c validate/check_texture.c validate/check_color.c \
 	validate/check_map.c validate/check_layout.c \
 	event/key.c event/moves.c event/rotate.c event/intro.c \
 	render/draw_textures.c render/game_loop.c render/minimap.c \
-	render/raycasting.c render/render.c render/mini_drap.c
+	render/raycasting.c render/render.c render/mini_drap.c  \
+	render/mini_scoop.c render/scoop_draw.c
 
 
 OBJS_DIR = objs/

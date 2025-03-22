@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 16:19:24 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/21 04:11:47 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/21 04:35:29 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	initialize_player(t_game *game)
 			{
 				game->player.x = col + 0.5;
 				game->player.y = row + 0.5;
-				init_player_NO_SO(&game->player);
-				init_player_EA_WE(&game->player);
+				init_player_no_so(&game->player);
+				init_player_ea_we(&game->player);
 				game->map->map_data[row][col] = '0';
 				return ;
 			}

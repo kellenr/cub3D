@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 15:37:19 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/21 04:22:37 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/22 19:16:05 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,34 +71,24 @@ void	free_mlx(t_game *game)
 	free(game);
 }
 
+static void	free_texture(void *mlx, void **img, void *texture)
+{
+	if (*img)
+	{
+		mlx_destroy_image(mlx, *img);
+		free(texture);
+		*img = NULL;
+	}
+}
+
 void	free_textures_imgs(t_txt *txt, void *mlx)
 {
 	if (!txt || !mlx)
 		return ;
-	if (txt->no.img)
-	{
-		mlx_destroy_image(mlx, txt->no.img);
-		free(txt->north);
-		txt->no.img = NULL;
-	}
-	if (txt->so.img)
-	{
-		mlx_destroy_image(mlx, txt->so.img);
-		free(txt->south);
-		txt->so.img = NULL;
-	}
-	if (txt->we.img)
-	{
-		mlx_destroy_image(mlx, txt->we.img);
-		free(txt->west);
-		txt->we.img = NULL;
-	}
-	if (txt->ea.img)
-	{
-		mlx_destroy_image(mlx, txt->ea.img);
-		free(txt->east);
-		txt->ea.img = NULL;
-	}
+	free_texture(mlx, &txt->no.img, txt->north);
+	free_texture(mlx, &txt->so.img, txt->south);
+	free_texture(mlx, &txt->we.img, txt->west);
+	free_texture(mlx, &txt->ea.img, txt->east);
 	if (txt->door && txt->d.img)
 	{
 		mlx_destroy_image(mlx, txt->d.img);
