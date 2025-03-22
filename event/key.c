@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:11:59 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/21 02:25:45 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/21 18:24:49 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	handle_game_keys(int keycode, t_game *game)
 		keys->rotate_right = 1;
 	else if (keycode == XK_m)
 		game->mini_active = !game->mini_active;
+	else if (keycode == XK_n)
+		game->mini_scoop = !game->mini_scoop;
 	else if (keycode == XK_space && BONUS)
 		toggle_door(game);
 	else if (keycode == XK_Escape)

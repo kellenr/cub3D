@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:42:59 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/21 04:10:27 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/22 19:11:53 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,7 @@ int	is_valid_line(t_game *game)
 
 	i = 0;
 	if (is_empty_line(game->n_line))
-	{
-		if (game->start)
-			if (game->line >= (game->map->height + game->s_map))
-				return (0);
 		return (0);
-	}
 	while (game->n_line[i])
 	{
 		if (!is_valid_char(game->n_line[i]))

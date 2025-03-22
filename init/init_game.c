@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 16:07:02 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/21 04:03:45 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/21 09:10:48 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	initialize_game(t_game *game)
 	game->e_map = 0;
 	game->intro_active = 0;
 	game->mini_active = 0;
+	game->mini_scoop = 0;
 }
 
 /*

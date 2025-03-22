@@ -1,9 +1,11 @@
-NO texture/cobblestone.xpm
-SO texture/color_stone.xpm
-WE texture/wall1v.xpm
-EA texture/mycelium_top.xpm
-F 139,69,19
-C 135,206,235
+NO texture/brick3.xpm
+SO texture/brick4.xpm
+WE texture/ceil4.xpm
+EA texture/wall2h.xpm
+
+
+F 184,113,39
+C 51,198,227
 
 111111
 100001

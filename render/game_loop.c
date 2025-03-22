@@ -6,7 +6,7 @@
 /*   By: kellen <kellen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 02:12:31 by keramos-          #+#    #+#             */
-/*   Updated: 2025/03/21 00:58:00 by kellen           ###   ########.fr       */
+/*   Updated: 2025/03/21 09:10:42 by kellen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_game_loop(t_game *game)
 {
 	game->intro_active = 1;
 	game->mini_active = 0;
+	game->mini_scoop = 0;
 	if (!load_textures(game))
 	{
 		free_mlx(game);
